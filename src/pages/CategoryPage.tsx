@@ -80,14 +80,6 @@ export default function CategoryPage({ category, description }: CategoryPageProp
   const rightArticles = articles.slice(3, 5);
   const remainingArticles = articles.slice(5);
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ro-RO', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
   return (
     <>
       <div className="container-revista py-section">

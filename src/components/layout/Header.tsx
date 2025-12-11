@@ -47,6 +47,10 @@ export default function Header() {
               src="/revista_lor_logo.png"
               alt="Revista LOR"
               className="h-7 md:h-8 w-auto object-contain"
+              fetchPriority="high"
+              decoding="sync"
+              width={120}
+              height={32}
             />
           </a>
 

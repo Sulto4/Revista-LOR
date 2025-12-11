@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import OptimizedImage from '../components/ui/OptimizedImage';
 
 interface Article {
   id: string;
@@ -86,7 +87,17 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
           <span className="text-revista-gold">{article.category}</span>
         </div>
 
-        <div className="border-t border-revista-text/10 mb-12"></div>
+        <div className="border-t border-revista-text/10 mb-8"></div>
+
+        {article.image_url && (
+          <OptimizedImage
+            src={article.image_url}
+            alt={article.title}
+            size="large"
+            priority
+            className="w-full aspect-[16/9] mb-12"
+          />
+        )}
 
         <div className="prose prose-lg max-w-none">
           {article.content.split('\n\n').map((paragraph, index) => (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import OptimizedImage from '../components/ui/OptimizedImage';
 
 interface CategoryPageProps {
   category: string;
@@ -100,13 +101,13 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                 href={`#/article/${article.slug}`}
                 className="group cursor-pointer block"
               >
-                <div className="overflow-hidden mb-4">
-                  <img
-                    src={article.image_url}
-                    alt={article.title}
-                    className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
+                <OptimizedImage
+                  src={article.image_url}
+                  alt={article.title}
+                  size="small"
+                  hoverScale
+                  className="w-full aspect-[3/4] mb-4"
+                />
                 <div className="space-y-3 text-center">
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                     {category}
@@ -127,13 +128,15 @@ export default function CategoryPage({ category, description }: CategoryPageProp
               href={`#/article/${heroArticle.slug}`}
               className="group cursor-pointer block h-full"
             >
-              <div className="overflow-hidden h-full min-h-[500px] lg:min-h-full relative">
-                <img
-                  src={heroArticle.image_url}
-                  alt={heroArticle.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
+              <OptimizedImage
+                src={heroArticle.image_url}
+                alt={heroArticle.title}
+                size="large"
+                priority
+                hoverScale
+                hoverDuration={700}
+                className="w-full h-full min-h-[500px] lg:min-h-full"
+              />
             </a>
           </div>
 
@@ -144,13 +147,13 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                 href={`#/article/${article.slug}`}
                 className="group cursor-pointer block"
               >
-                <div className="overflow-hidden mb-4">
-                  <img
-                    src={article.image_url}
-                    alt={article.title}
-                    className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
+                <OptimizedImage
+                  src={article.image_url}
+                  alt={article.title}
+                  size="small"
+                  hoverScale
+                  className="w-full aspect-[3/4] mb-4"
+                />
                 <div className="space-y-3 text-center">
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                     {category}
@@ -184,13 +187,13 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                   href={`#/article/${article.slug}`}
                   className="group cursor-pointer block"
                 >
-                  <div className="overflow-hidden mb-4">
-                    <img
-                      src={article.image_url}
-                      alt={article.title}
-                      className="w-full aspect-[4/5] object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
+                  <OptimizedImage
+                    src={article.image_url}
+                    alt={article.title}
+                    size="medium"
+                    hoverScale
+                    className="w-full aspect-[4/5] mb-4"
+                  />
                   <div className="space-y-2">
                     <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                       {category}

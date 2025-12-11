@@ -66,13 +66,13 @@ export default function Header() {
 
       <div className="hidden lg:block border-b border-revista-separator" />
 
-      <div className="hidden lg:block overflow-hidden">
+      <div
+        className="hidden lg:block overflow-hidden transition-[max-height] duration-300 ease-out"
+        style={{ maxHeight: isNavHidden ? '0' : '100px' }}
+      >
         <div
-          className="transition-all duration-300 ease-out"
-          style={{
-            transform: isNavHidden ? 'translateY(-100%)' : 'translateY(0)',
-            marginTop: isNavHidden ? '-48px' : '0'
-          }}
+          className="transition-transform duration-300 ease-out"
+          style={{ transform: isNavHidden ? 'translateY(-100%)' : 'translateY(0)' }}
         >
           <nav className="flex items-center justify-center gap-5 py-2.5">
             <div className="container-revista flex items-center justify-center gap-5">

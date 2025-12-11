@@ -21,7 +21,7 @@ export default function ArticleCardCompact({ article }: ArticleCardCompactProps)
           {article.category}
         </p>
 
-        <h3 className="font-serif text-base lg:text-lg font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors line-clamp-2">
+        <h3 className="font-serif text-xl md:text-base lg:text-lg font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors line-clamp-2">
           {article.title}
         </h3>
 

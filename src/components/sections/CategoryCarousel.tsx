@@ -119,7 +119,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
                 alt={article.title}
                 size="medium"
                 hoverScale
-                className="w-full aspect-[3/4] mb-4"
+                className="w-full aspect-square md:aspect-[3/4] mb-4"
               />
               <div className="space-y-2">
                 <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">

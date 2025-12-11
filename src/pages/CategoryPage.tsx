@@ -106,7 +106,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                   alt={article.title}
                   size="small"
                   hoverScale
-                  className="w-full aspect-[3/4] mb-4"
+                  className="w-full aspect-square md:aspect-[3/4] mb-4"
                 />
                 <div className="space-y-3 text-center">
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
@@ -163,7 +163,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                   alt={article.title}
                   size="small"
                   hoverScale
-                  className="w-full aspect-[3/4] mb-4"
+                  className="w-full aspect-square md:aspect-[3/4] mb-4"
                 />
                 <div className="space-y-3 text-center">
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
@@ -203,7 +203,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                     alt={article.title}
                     size="medium"
                     hoverScale
-                    className="w-full aspect-[4/5] mb-4"
+                    className="w-full aspect-square md:aspect-[4/5] mb-4"
                   />
                   <div className="space-y-2">
                     <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">

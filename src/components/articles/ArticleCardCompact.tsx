@@ -13,7 +13,7 @@ export default function ArticleCardCompact({ article }: ArticleCardCompactProps)
         alt={article.title}
         size="small"
         hoverScale
-        className="w-full aspect-[5/6] mb-4"
+        className="w-full aspect-square md:aspect-[5/6] mb-4"
       />
 
       <div className="flex flex-col gap-2 text-center shrink-0">

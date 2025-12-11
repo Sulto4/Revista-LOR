@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react';
 import Link from '../ui/Link';
 import ArticleCardSmall, { Article } from '../articles/ArticleCardSmall';
+import OptimizedImage from '../ui/OptimizedImage';
 
 interface ArticlePageBaseProps {
   category: string;
@@ -60,13 +61,13 @@ export default function ArticlePageBase({
             <span>{date}</span>
           </div>
 
-          <div className="mb-12">
-            <img
-              src={heroImage}
-              alt={title}
-              className="w-full aspect-[16/9] object-cover"
-            />
-          </div>
+          <OptimizedImage
+            src={heroImage}
+            alt={title}
+            size="hero"
+            priority
+            className="w-full aspect-[16/9] mb-12"
+          />
 
           <div className="prose prose-lg max-w-none">
             {children}

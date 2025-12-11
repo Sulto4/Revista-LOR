@@ -1,4 +1,5 @@
 import { Article } from './ArticleCardSmall';
+import OptimizedImage from '../ui/OptimizedImage';
 
 interface ArticleCardListProps {
   article: Article & { slug?: string };
@@ -18,13 +19,13 @@ export default function ArticleCardList({ article }: ArticleCardListProps) {
           De {article.author}
         </p>
       </div>
-      <div className="flex-shrink-0 w-20 h-20 overflow-hidden">
-        <img
-          src={article.imageUrl}
-          alt={article.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      </div>
+      <OptimizedImage
+        src={article.imageUrl}
+        alt={article.title}
+        size="thumbnail"
+        hoverScale
+        className="flex-shrink-0 w-20 h-20"
+      />
     </>
   );
 

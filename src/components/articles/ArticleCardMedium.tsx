@@ -1,4 +1,5 @@
 import { Article } from './ArticleCardSmall';
+import OptimizedImage from '../ui/OptimizedImage';
 
 interface ArticleCardMediumProps {
   article: Article;
@@ -7,13 +8,13 @@ interface ArticleCardMediumProps {
 export default function ArticleCardMedium({ article }: ArticleCardMediumProps) {
   return (
     <article className="group cursor-pointer">
-      <div className="overflow-hidden mb-1">
-        <img
-          src={article.imageUrl}
-          alt={article.title}
-          className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      </div>
+      <OptimizedImage
+        src={article.imageUrl}
+        alt={article.title}
+        size="medium"
+        hoverScale
+        className="w-full aspect-[3/4] mb-1"
+      />
 
       <div className="flex flex-col gap-1">
         <p className="text-metadata font-sans uppercase tracking-wider text-revista-gold leading-none">

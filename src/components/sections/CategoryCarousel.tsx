@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import OptimizedImage from '../ui/OptimizedImage';
 
 interface Article {
   id: string;
@@ -113,13 +114,13 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
               href={`#/article/${article.slug}`}
               className="group block"
             >
-              <div className="overflow-hidden mb-4 aspect-[3/4]">
-                <img
-                  src={article.image_url}
-                  alt={article.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
+              <OptimizedImage
+                src={article.image_url}
+                alt={article.title}
+                size="medium"
+                hoverScale
+                className="w-full aspect-[3/4] mb-4"
+              />
               <div className="space-y-2">
                 <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                   {article.category}

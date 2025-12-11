@@ -1,4 +1,5 @@
 import { Article } from './ArticleCardSmall';
+import OptimizedImage from '../ui/OptimizedImage';
 
 interface ArticleCardHeroProps {
   article: Article;
@@ -9,13 +10,17 @@ export default function ArticleCardHero({ article, imageHeight }: ArticleCardHer
   return (
     <article className="group cursor-pointer">
       <div
-        className="overflow-hidden mb-4 aspect-[4/5] lg:aspect-auto"
+        className="mb-4 aspect-[4/5] lg:aspect-auto"
         style={imageHeight ? { height: imageHeight } : undefined}
       >
-        <img
+        <OptimizedImage
           src={article.imageUrl}
           alt={article.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          size="large"
+          priority
+          hoverScale
+          hoverDuration={700}
+          className="w-full h-full"
         />
       </div>
 

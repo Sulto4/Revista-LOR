@@ -126,7 +126,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
           <div className="lg:col-span-6 order-1 lg:order-2">
             <a
               href={`#/article/${heroArticle.slug}`}
-              className="group cursor-pointer block h-full"
+              className="group cursor-pointer block lg:h-full"
             >
               <OptimizedImage
                 src={heroArticle.image_url}
@@ -135,7 +135,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                 priority
                 hoverScale
                 hoverDuration={700}
-                className="w-full h-full min-h-[500px] lg:min-h-full"
+                className="w-full aspect-[4/5] lg:h-full lg:aspect-auto lg:min-h-full"
               />
               <div className="space-y-3 text-center mt-4 lg:hidden">
                 <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">

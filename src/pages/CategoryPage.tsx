@@ -137,6 +137,17 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                 hoverDuration={700}
                 className="w-full h-full min-h-[500px] lg:min-h-full"
               />
+              <div className="space-y-3 text-center mt-4 lg:hidden">
+                <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
+                  {category}
+                </p>
+                <h3 className="font-serif text-2xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
+                  {heroArticle.title}
+                </h3>
+                <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">
+                  De {heroArticle.author}
+                </p>
+              </div>
             </a>
           </div>
 

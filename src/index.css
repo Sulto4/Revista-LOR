@@ -34,6 +34,6 @@
   }
 
   .section-spacing {
-    @apply py-12 md:py-section;
+    @apply py-12;
   }
 }

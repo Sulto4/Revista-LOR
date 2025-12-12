@@ -158,7 +158,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                 hoverDuration={700}
                 className="w-full aspect-[4/5] lg:h-full lg:aspect-auto lg:min-h-full"
               />
-              <div className="space-y-2 text-center mt-4">
+              <div className="space-y-2 text-center mt-4 pb-8">
                 <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                   {category}
                 </p>

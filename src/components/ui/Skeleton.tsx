@@ -198,3 +198,99 @@ export function ArticlePageSkeleton() {
     </article>
   );
 }
+
+export function StaticPageSkeleton() {
+  return (
+    <div className="container-revista py-section">
+      <div className="max-w-4xl mx-auto">
+        <Skeleton className="h-12 md:h-16 w-3/4 mb-6" />
+        <Skeleton className="h-4 w-40 mb-12" />
+
+        <div className="space-y-8">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i}>
+              <Skeleton className="h-8 w-2/3 mb-4" />
+              <Skeleton className="h-5 w-full mb-2" />
+              <Skeleton className="h-5 w-full mb-2" />
+              <Skeleton className="h-5 w-4/5" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function ContactPageSkeleton() {
+  return (
+    <div className="container-revista py-section">
+      <div className="max-w-3xl mx-auto">
+        <Skeleton className="h-12 md:h-16 w-48 mb-6" />
+        <Skeleton className="h-5 w-full mb-2" />
+        <Skeleton className="h-5 w-3/4 mb-12" />
+
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <Skeleton className="h-4 w-16 mb-2" />
+              <Skeleton className="h-12 w-full" />
+            </div>
+            <div>
+              <Skeleton className="h-4 w-16 mb-2" />
+              <Skeleton className="h-12 w-full" />
+            </div>
+          </div>
+          <div>
+            <Skeleton className="h-4 w-20 mb-2" />
+            <Skeleton className="h-12 w-full" />
+          </div>
+          <div>
+            <Skeleton className="h-4 w-16 mb-2" />
+            <Skeleton className="h-40 w-full" />
+          </div>
+          <Skeleton className="h-12 w-40" />
+        </div>
+
+        <div className="mt-16 pt-16 border-t border-revista-separator">
+          <Skeleton className="h-8 w-64 mb-8" />
+          <div className="space-y-4">
+            <Skeleton className="h-5 w-56" />
+            <Skeleton className="h-5 w-64" />
+            <Skeleton className="h-5 w-72" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function RedactiePageSkeleton() {
+  return (
+    <div className="container-revista py-section">
+      <div className="max-w-4xl mx-auto">
+        <Skeleton className="h-12 md:h-16 w-64 mb-6" />
+        <Skeleton className="h-5 w-full mb-2" />
+        <Skeleton className="h-5 w-3/4 mb-16" />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-12">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="text-center">
+              <Skeleton className="w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 rounded-full" />
+              <Skeleton className="h-6 w-32 mx-auto mb-2" />
+              <Skeleton className="h-4 w-24 mx-auto mb-3" />
+              <Skeleton className="h-4 w-full mb-1" />
+              <Skeleton className="h-4 w-4/5 mx-auto" />
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-revista-ivory p-8 md:p-12">
+          <Skeleton className="h-8 w-48 mb-6" />
+          <Skeleton className="h-5 w-full mb-2" />
+          <Skeleton className="h-5 w-full mb-2" />
+          <Skeleton className="h-5 w-3/4" />
+        </div>
+      </div>
+    </div>
+  );
+}

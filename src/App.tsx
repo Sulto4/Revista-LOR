@@ -1,7 +1,8 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
+import SmartSuspense from './components/ui/SmartSuspense';
 
 const Stiri = lazy(() => import('./pages/Stiri'));
 const Lifestyle = lazy(() => import('./pages/Lifestyle'));
@@ -17,14 +18,6 @@ const Redactie = lazy(() => import('./pages/Redactie'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const ArticlePage = lazy(() => import('./pages/ArticlePage'));
-
-function PageLoader() {
-  return (
-    <div className="min-h-[50vh] flex items-center justify-center">
-      <div className="w-8 h-8 border-2 border-revista-gold border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
-}
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.hash.slice(1) || '/');
@@ -43,9 +36,9 @@ function App() {
     if (currentPath.startsWith('/article/')) {
       const slug = currentPath.replace('/article/', '');
       return (
-        <Suspense fallback={<PageLoader />}>
+        <SmartSuspense path={currentPath}>
           <ArticlePage slug={slug} />
-        </Suspense>
+        </SmartSuspense>
       );
     }
 
@@ -54,81 +47,81 @@ function App() {
         return <Home />;
       case '/stiri':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/stiri">
             <Stiri />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/lifestyle':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/lifestyle">
             <Lifestyle />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/cultura':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/cultura">
             <Cultura />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/fashion':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/fashion">
             <Fashion />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/beauty':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/beauty">
             <Beauty />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/tech':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/tech">
             <Tech />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/sanatate':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/sanatate">
             <Sanatate />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/sport':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/sport">
             <Sport />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/horoscop':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/horoscop">
             <Horoscop />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/contact':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/contact">
             <Contact />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/redactie':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/redactie">
             <Redactie />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/terms':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/terms">
             <Terms />
-          </Suspense>
+          </SmartSuspense>
         );
       case '/privacy':
         return (
-          <Suspense fallback={<PageLoader />}>
+          <SmartSuspense path="/privacy">
             <Privacy />
-          </Suspense>
+          </SmartSuspense>
         );
       default:
         return <Home />;

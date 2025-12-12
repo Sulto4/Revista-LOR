@@ -13,7 +13,7 @@ export default {
       },
       fontFamily: {
         'sans': ['Inter', 'sans-serif'],
-        'headline': ['Arimo', 'sans-serif'],
+        'headline': ['Inter', 'sans-serif'],
         'serif': ['serif'],
       },
       fontSize: {

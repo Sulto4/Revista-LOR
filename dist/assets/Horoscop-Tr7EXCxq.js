@@ -1,0 +1,1 @@
+import{j as e}from"./index-CUlOgoKX.js";import{C as o}from"./CategoryPage-Cevikxh4.js";function t(){return e.jsx(o,{category:"Horoscop",description:"Descoperă ce îți rezervă astrele. Citește horoscopul zilnic pentru semnul tău zodiacal și află cum să navighezi energiile cosmice."})}export{t as default};

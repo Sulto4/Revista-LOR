@@ -19,13 +19,13 @@ export default function Home() {
     <>
       <HeroSection />
 
-      <div className="border-t border-revista-separator" />
+      <div className="hidden md:block border-t border-revista-separator" />
 
       {categories.map((category, index) => (
         <div key={category.name}>
           <CategoryCarousel category={category.name} title={category.title} />
           {index < categories.length - 1 && (
-            <div className="border-t border-revista-separator" />
+            <div className="hidden md:block border-t border-revista-separator" />
           )}
         </div>
       ))}

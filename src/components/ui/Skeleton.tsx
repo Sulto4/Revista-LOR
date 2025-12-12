@@ -12,7 +12,7 @@ export function Skeleton({ className = '' }: SkeletonProps) {
 
 export function HeroSkeleton() {
   return (
-    <section className="py-section">
+    <section className="pt-section pb-12 md:pb-section">
       <div className="container-revista">
         <div className="flex flex-col gap-6">
           <div className="block lg:hidden">
@@ -84,10 +84,10 @@ export function HeroSkeleton() {
 
 export function CategoryCarouselSkeleton() {
   return (
-    <section className="py-section">
+    <section className="py-12 md:py-section">
       <div className="container-revista">
         <div className="mb-8 md:mb-12">
-          <div className="border-t border-revista-separator pt-6 mb-6 md:mb-8">
+          <div className="border-t-0 md:border-t border-revista-separator pt-0 md:pt-6 mb-6 md:mb-8">
             <div className="flex items-center justify-center">
               <Skeleton className="h-5 w-32" />
             </div>

@@ -198,7 +198,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
                     <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                       {article.category}
                     </p>
-                    <h3 className="font-serif text-xl font-medium text-revista-black leading-tight line-clamp-3">
+                    <h3 className="font-headline text-xl font-medium text-revista-black leading-tight line-clamp-3">
                       {article.title}
                     </h3>
                     <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">
@@ -243,7 +243,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                     {article.category}
                   </p>
-                  <h3 className="font-serif text-xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors line-clamp-3">
+                  <h3 className="font-headline text-xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors line-clamp-3">
                     {article.title}
                   </h3>
                   <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">

@@ -109,7 +109,7 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
     return (
       <div className="container-revista py-section">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-serif text-4xl font-bold text-revista-black mb-4">
+          <h1 className="font-headline text-4xl font-bold text-revista-black mb-4">
             Articol negăsit
           </h1>
           <p className="text-revista-text/60">
@@ -130,7 +130,7 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
     <>
       <article className="container-revista py-section">
         <div className="max-w-3xl mx-auto">
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-revista-black mb-6 md:mb-8 leading-tight">
+          <h1 className="font-headline text-3xl md:text-4xl lg:text-5xl font-bold text-revista-black mb-6 md:mb-8 leading-tight">
             {article.title}
           </h1>
 
@@ -195,7 +195,7 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
                     <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                       {rec.category}
                     </p>
-                    <h3 className="font-serif text-xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors line-clamp-3">
+                    <h3 className="font-headline text-xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors line-clamp-3">
                       {rec.title}
                     </h3>
                     <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">

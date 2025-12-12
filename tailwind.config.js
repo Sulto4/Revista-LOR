@@ -12,8 +12,9 @@ export default {
         'revista-gold': '#C6A667',
       },
       fontFamily: {
-        'serif': ['"Source Serif 4"', 'serif'],
         'sans': ['Inter', 'sans-serif'],
+        'headline': ['Arimo', 'sans-serif'],
+        'serif': ['serif'],
       },
       fontSize: {
         'h1': ['64px', { lineHeight: '1.1', letterSpacing: '-0.02em' }],

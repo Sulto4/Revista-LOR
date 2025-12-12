@@ -118,7 +118,7 @@ export function CategoryPageSkeleton({ category, description }: CategoryPageSkel
   return (
     <div className="container-revista py-section">
       <div className="max-w-3xl mb-12">
-        <h1 className="font-serif text-5xl md:text-6xl font-bold text-revista-black mb-6">
+        <h1 className="font-headline text-5xl md:text-6xl font-bold text-revista-black mb-6">
           {category}
         </h1>
         <p className="text-lg text-revista-text/80 leading-relaxed">

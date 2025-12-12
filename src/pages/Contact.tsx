@@ -5,7 +5,7 @@ export default function Contact() {
   return (
     <div className="container-revista py-section">
       <div className="max-w-3xl mx-auto">
-        <h1 className="font-serif text-5xl md:text-6xl font-bold text-revista-black mb-6">
+        <h1 className="font-headline text-5xl md:text-6xl font-bold text-revista-black mb-6">
           Contact
         </h1>
         <p className="text-lg text-revista-text/80 leading-relaxed mb-12">
@@ -38,7 +38,7 @@ export default function Contact() {
         </form>
 
         <div className="mt-16 pt-16 border-t border-revista-separator">
-          <h2 className="font-serif text-3xl font-semibold text-revista-black mb-8">
+          <h2 className="font-headline text-3xl font-semibold text-revista-black mb-8">
             Informații de Contact
           </h2>
           <div className="space-y-4 text-revista-text">

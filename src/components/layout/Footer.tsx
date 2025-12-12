@@ -32,7 +32,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-serif text-sm font-normal uppercase tracking-wide text-[#F4A623] mb-4">
+            <h4 className="font-headline text-sm font-normal uppercase tracking-wide text-[#F4A623] mb-4">
               UTILE
             </h4>
             <ul className="space-y-1">
@@ -47,7 +47,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-serif text-sm font-normal uppercase tracking-wide text-[#F4A623] mb-4">
+            <h4 className="font-headline text-sm font-normal uppercase tracking-wide text-[#F4A623] mb-4">
               PROGRAM
             </h4>
             <div className="text-sm text-gray-700 space-y-1">
@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-serif text-sm font-normal uppercase tracking-wide text-[#F4A623] mb-4">
+            <h4 className="font-headline text-sm font-normal uppercase tracking-wide text-[#F4A623] mb-4">
               NEWSLETTER
             </h4>
             <p className="text-sm text-gray-700 leading-relaxed mb-4">

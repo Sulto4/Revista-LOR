@@ -29,7 +29,7 @@ export default function ArticleCardHero({ article, imageHeight }: ArticleCardHer
           {article.category}
         </p>
 
-        <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight text-revista-black group-hover:text-revista-gold transition-colors">
+        <h2 className="font-headline text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight text-revista-black group-hover:text-revista-gold transition-colors">
           {article.title}
         </h2>
 

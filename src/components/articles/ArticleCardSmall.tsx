@@ -30,7 +30,7 @@ export default function ArticleCardSmall({ article }: ArticleCardSmallProps) {
           {article.category}
         </p>
 
-        <h3 className="font-serif text-2xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
+        <h3 className="font-headline text-2xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
           {article.title}
         </h3>
 

@@ -83,7 +83,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
     return (
       <div className="container-revista py-section">
         <div className="max-w-3xl mb-12">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold text-revista-black mb-6">
+          <h1 className="font-headline text-5xl md:text-6xl font-bold text-revista-black mb-6">
             {category}
           </h1>
           <p className="text-lg text-revista-text/80 leading-relaxed">
@@ -106,7 +106,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
     <>
       <div className="container-revista py-section pb-40">
         <div className="max-w-3xl mb-12">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold text-revista-black mb-6">
+          <h1 className="font-headline text-5xl md:text-6xl font-bold text-revista-black mb-6">
             {category}
           </h1>
           <p className="text-lg text-revista-text/80 leading-relaxed">
@@ -133,7 +133,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                     {category}
                   </p>
-                  <h3 className="font-serif text-xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
+                  <h3 className="font-headline text-xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
                     {article.title}
                   </h3>
                   <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">
@@ -162,7 +162,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                 <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                   {category}
                 </p>
-                <h3 className="font-serif text-2xl md:text-3xl lg:text-4xl font-semibold text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
+                <h3 className="font-headline text-2xl md:text-3xl lg:text-4xl font-semibold text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
                   {heroArticle.title}
                 </h3>
                 <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">
@@ -190,7 +190,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                     {category}
                   </p>
-                  <h3 className="font-serif text-xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
+                  <h3 className="font-headline text-xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
                     {article.title}
                   </h3>
                   <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">
@@ -230,7 +230,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                     <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
                       {category}
                     </p>
-                    <h3 className="font-serif text-lg font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors line-clamp-3">
+                    <h3 className="font-headline text-lg font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors line-clamp-3">
                       {article.title}
                     </h3>
                     <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">

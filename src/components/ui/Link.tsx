@@ -14,7 +14,7 @@ export default function Link({
   const variants = {
     nav: 'font-sans text-sm font-medium text-revista-text hover:text-revista-gold transition-colors',
     footer: 'font-sans text-sm text-revista-text hover:text-revista-gold transition-colors',
-    inline: 'font-serif text-revista-text hover:text-revista-gold underline-offset-4 hover:underline transition-all',
+    inline: 'font-headline text-revista-text hover:text-revista-gold underline-offset-4 hover:underline transition-all',
   };
 
   return (

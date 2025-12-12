@@ -26,7 +26,7 @@ export default function ArticleCardLarge({ article }: ArticleCardLargeProps) {
             {article.category}
           </p>
 
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight group-hover:text-revista-gold transition-colors">
+          <h2 className="font-headline text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight group-hover:text-revista-gold transition-colors">
             {article.title}
           </h2>
 

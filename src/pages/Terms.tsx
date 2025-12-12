@@ -2,7 +2,7 @@ export default function Terms() {
   return (
     <div className="container-revista py-section">
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-serif text-5xl md:text-6xl font-bold text-revista-black mb-6">
+        <h1 className="font-headline text-5xl md:text-6xl font-bold text-revista-black mb-6">
           Termeni și Condiții
         </h1>
         <p className="text-metadata text-revista-text/60 mb-12">
@@ -11,7 +11,7 @@ export default function Terms() {
 
         <div className="prose prose-lg max-w-none space-y-8">
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               1. Acceptarea Termenilor
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -23,7 +23,7 @@ export default function Terms() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               2. Proprietate Intelectuală
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -34,7 +34,7 @@ export default function Terms() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               3. Utilizarea Permisă
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -45,7 +45,7 @@ export default function Terms() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               4. Limitarea Răspunderii
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -56,7 +56,7 @@ export default function Terms() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               5. Modificări ale Termenilor
             </h2>
             <p className="text-revista-text/80 leading-relaxed">

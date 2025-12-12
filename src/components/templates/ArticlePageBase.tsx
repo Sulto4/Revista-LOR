@@ -51,7 +51,7 @@ export default function ArticlePageBase({
             {category}
           </p>
 
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-revista-black leading-tight mb-8">
+          <h1 className="font-headline text-5xl md:text-6xl lg:text-7xl font-bold text-revista-black leading-tight mb-8">
             {title}
           </h1>
 
@@ -78,7 +78,7 @@ export default function ArticlePageBase({
       {recommendedArticles.length > 0 && (
         <div className="bg-white py-section">
           <div className="container-revista">
-            <h2 className="font-serif text-4xl font-semibold text-revista-black mb-12">
+            <h2 className="font-headline text-4xl font-semibold text-revista-black mb-12">
               Articole recomandate
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-card">

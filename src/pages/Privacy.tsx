@@ -2,7 +2,7 @@ export default function Privacy() {
   return (
     <div className="container-revista py-section">
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-serif text-5xl md:text-6xl font-bold text-revista-black mb-6">
+        <h1 className="font-headline text-5xl md:text-6xl font-bold text-revista-black mb-6">
           Politica de Confidențialitate
         </h1>
         <p className="text-metadata text-revista-text/60 mb-12">
@@ -11,7 +11,7 @@ export default function Privacy() {
 
         <div className="prose prose-lg max-w-none space-y-8">
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               1. Informații Colectate
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -22,7 +22,7 @@ export default function Privacy() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               2. Utilizarea Informațiilor
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -34,7 +34,7 @@ export default function Privacy() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               3. Cookies
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -46,7 +46,7 @@ export default function Privacy() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               4. Securitatea Datelor
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -57,7 +57,7 @@ export default function Privacy() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               5. Drepturile Utilizatorilor
             </h2>
             <p className="text-revista-text/80 leading-relaxed">
@@ -68,7 +68,7 @@ export default function Privacy() {
           </section>
 
           <section>
-            <h2 className="font-serif text-3xl font-semibold text-revista-black mb-4">
+            <h2 className="font-headline text-3xl font-semibold text-revista-black mb-4">
               6. Modificări ale Politicii
             </h2>
             <p className="text-revista-text/80 leading-relaxed">

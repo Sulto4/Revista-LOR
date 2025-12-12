@@ -12,7 +12,7 @@ export default function ArticleCardList({ article }: ArticleCardListProps) {
         <p className="text-xs font-sans uppercase tracking-wider text-revista-gold leading-none">
           {article.category}
         </p>
-        <h3 className="font-serif text-base font-medium text-revista-black leading-snug group-hover:text-revista-gold transition-colors">
+        <h3 className="font-headline text-base font-medium text-revista-black leading-snug group-hover:text-revista-gold transition-colors">
           {article.title}
         </h3>
         <p className="text-xs font-sans uppercase tracking-wide text-revista-text/60">

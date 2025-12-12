@@ -22,7 +22,7 @@ export default function CategorySection({
     <section className="section-spacing">
       <div className="container-revista">
         <div className="flex items-center justify-between mb-12">
-          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-revista-black">
+          <h2 className="font-headline text-4xl md:text-5xl font-semibold text-revista-black">
             {title}
           </h2>
           {showViewAll && (

@@ -21,7 +21,7 @@ export default function ArticleCardMedium({ article }: ArticleCardMediumProps) {
           {article.category}
         </p>
 
-        <h3 className="font-serif text-3xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
+        <h3 className="font-headline text-3xl font-medium text-revista-black leading-tight group-hover:text-revista-gold transition-colors">
           {article.title}
         </h3>
 

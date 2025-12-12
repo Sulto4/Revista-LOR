@@ -8,19 +8,19 @@
   }
 
   h1 {
-    @apply font-serif text-h1 font-semibold text-revista-black;
+    @apply font-headline text-h1 font-semibold text-revista-black;
   }
 
   h2 {
-    @apply font-serif text-h2 font-semibold text-revista-black;
+    @apply font-headline text-h2 font-semibold text-revista-black;
   }
 
   h3 {
-    @apply font-serif text-h3 font-medium text-revista-text;
+    @apply font-headline text-h3 font-medium text-revista-text;
   }
 
   h4 {
-    @apply font-serif text-2xl font-medium text-revista-text;
+    @apply font-headline text-2xl font-medium text-revista-text;
   }
 
   p {

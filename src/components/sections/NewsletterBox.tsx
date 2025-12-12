@@ -15,7 +15,7 @@ export default function NewsletterBox() {
     <section className="section-spacing bg-revista-ivory">
       <div className="container-revista">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-serif text-4xl font-semibold text-revista-black mb-4">
+          <h2 className="font-headline text-4xl font-semibold text-revista-black mb-4">
             Newsletter
           </h2>
 

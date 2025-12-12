@@ -112,7 +112,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
 
   if (loading) {
     return (
-      <section className="py-12 md:py-section">
+      <section className="py-12">
         <div className="container-revista">
           <div className="text-center text-revista-text/60">Se incarca...</div>
         </div>
@@ -129,10 +129,10 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
   const mobileTranslateX = -(mobileIndex * (articleWidthPercent + gapPercent)) + dragOffset / (containerRef.current?.offsetWidth || 1) * 100;
 
   return (
-    <section className="py-12 md:py-section">
+    <section className="py-12">
       <div className="container-revista">
-        <div className="mb-8 md:mb-12">
-          <div className="border-t-0 md:border-t border-revista-separator pt-0 md:pt-6 mb-6 md:mb-8">
+        <div className="mb-8">
+          <div className="mb-6">
             <div className="relative flex items-center justify-between md:justify-center">
               <h2 className="font-sans text-lg lg:text-[1.35rem] uppercase tracking-[0.3em] text-revista-black font-medium">
                 {title || category}

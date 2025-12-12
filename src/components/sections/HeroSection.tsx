@@ -116,7 +116,7 @@ export default function HeroSection() {
   const listArticles = articles.slice(3, 3 + HERO_LIST_LIMIT);
 
   return (
-    <section className="pt-section pb-12 md:pb-section">
+    <section className="pt-section pb-12">
       <div className="container-revista">
         <div className="flex flex-col gap-6">
           <a href={`#/article/${heroArticle.slug}`} className="block lg:hidden">

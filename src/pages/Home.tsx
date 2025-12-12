@@ -19,15 +19,8 @@ export default function Home() {
     <>
       <HeroSection />
 
-      <div className="hidden md:block border-t border-revista-separator" />
-
-      {categories.map((category, index) => (
-        <div key={category.name}>
-          <CategoryCarousel category={category.name} title={category.title} />
-          {index < categories.length - 1 && (
-            <div className="hidden md:block border-t border-revista-separator" />
-          )}
-        </div>
+      {categories.map((category) => (
+        <CategoryCarousel key={category.name} category={category.name} title={category.title} />
       ))}
 
       <NewsletterBox />

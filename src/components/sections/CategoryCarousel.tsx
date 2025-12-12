@@ -133,25 +133,10 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
       <div className="container-revista">
         <div className="mb-8">
           <div className="border-t border-b border-revista-separator py-3 mb-6">
-            <div className="relative flex items-center justify-between md:justify-center">
+            <div className="relative flex items-center justify-center">
               <h2 className="font-sans text-lg lg:text-[1.35rem] uppercase tracking-[0.3em] text-revista-black font-medium">
                 {title || category}
               </h2>
-
-              {isMobile && articles.length > 1 && (
-                <div className="flex items-center gap-1.5">
-                  {articles.map((_, index) => (
-                    <span
-                      key={index}
-                      className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
-                        index === mobileIndex
-                          ? 'bg-revista-gold'
-                          : 'bg-revista-separator'
-                      }`}
-                    />
-                  ))}
-                </div>
-              )}
 
               {!isMobile && totalPages > 1 && (
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4">
@@ -223,6 +208,21 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
                 </a>
               ))}
             </div>
+
+            {articles.length > 1 && (
+              <div className="flex justify-center items-center gap-1.5 mt-6">
+                {articles.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`w-1.5 h-1.5 rounded-full transition-colors duration-300 ${
+                      index === mobileIndex
+                        ? 'bg-revista-gold'
+                        : 'bg-revista-separator'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

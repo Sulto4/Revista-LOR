@@ -14,12 +14,12 @@ export default function NewsletterBox() {
   return (
     <section className="section-spacing bg-revista-ivory">
       <div className="container-revista">
-        <div className="max-w-2xl mx-auto text-center py-6 md:py-10">
-          <h2 className="font-serif text-4xl md:text-5xl font-semibold text-revista-black mb-6">
+        <div className="max-w-2xl mx-auto text-center py-0 md:py-10">
+          <h2 className="font-serif text-3xl md:text-5xl font-semibold text-revista-black mb-4 md:mb-6">
             Newsletter
           </h2>
 
-          <p className="text-lg text-revista-text/80 mb-8 leading-relaxed">
+          <p className="text-lg text-revista-text/80 mb-6 md:mb-8 leading-relaxed">
             Abonează-te la newsletter-ul nostru și primește cele mai noi articole,
             tendințe și povești inspiraționale direct în inbox.
           </p>
@@ -40,7 +40,7 @@ export default function NewsletterBox() {
             </Button>
           </form>
 
-          <p className="text-sm text-revista-text/60 mt-4">
+          <p className="text-sm text-revista-text/60 mt-3 md:mt-4">
             Ne respectăm cititorii. Poți anula abonamentul oricând.
           </p>
         </div>

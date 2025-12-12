@@ -104,7 +104,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
 
   return (
     <>
-      <div className="container-revista py-section pb-32">
+      <div className="container-revista py-section pb-40">
         <div className="max-w-3xl mb-12">
           <h1 className="font-serif text-5xl md:text-6xl font-bold text-revista-black mb-6">
             {category}

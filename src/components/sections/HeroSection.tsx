@@ -4,6 +4,7 @@ import ArticleCardHero from '../articles/ArticleCardHero';
 import ArticleCardCompact from '../articles/ArticleCardCompact';
 import ArticleCardList from '../articles/ArticleCardList';
 import { Article } from '../articles/ArticleCardSmall';
+import { HeroSkeleton } from '../ui/Skeleton';
 
 interface DBArticle {
   id: string;
@@ -32,16 +33,45 @@ function formatArticle(article: DBArticle): Article {
 }
 
 const HERO_LIST_LIMIT = 6;
+const CACHE_KEY = 'revista_hero_articles';
+const CACHE_DURATION = 5 * 60 * 1000;
+
+function getCachedArticles(): Article[] | null {
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (!cached) return null;
+
+    const { articles, timestamp } = JSON.parse(cached);
+    if (Date.now() - timestamp > CACHE_DURATION) {
+      localStorage.removeItem(CACHE_KEY);
+      return null;
+    }
+    return articles;
+  } catch {
+    return null;
+  }
+}
+
+function setCachedArticles(articles: Article[]) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+      articles,
+      timestamp: Date.now()
+    }));
+  } catch {
+    // Storage full or unavailable
+  }
+}
 
 export default function HeroSection() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(true);
+  const cachedData = getCachedArticles();
+  const [articles, setArticles] = useState<Article[]>(cachedData || []);
+  const [loading, setLoading] = useState(!cachedData);
   const [leftColumnHeight, setLeftColumnHeight] = useState<number>(0);
   const leftColumnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchArticles() {
-      setLoading(true);
       const { data, error } = await supabase
         .from('articles')
         .select('*')
@@ -53,6 +83,7 @@ export default function HeroSection() {
       } else {
         const formattedArticles = (data || []).map(formatArticle);
         setArticles(formattedArticles);
+        setCachedArticles(formattedArticles);
       }
       setLoading(false);
     }
@@ -73,13 +104,7 @@ export default function HeroSection() {
   }, [articles]);
 
   if (loading) {
-    return (
-      <section className="py-section">
-        <div className="container-revista">
-          <div className="text-center text-revista-text/60">Se încarcă...</div>
-        </div>
-      </section>
-    );
+    return <HeroSkeleton />;
   }
 
   if (articles.length === 0) {

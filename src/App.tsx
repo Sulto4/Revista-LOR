@@ -1,21 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
-import Stiri from './pages/Stiri';
-import Lifestyle from './pages/Lifestyle';
-import Cultura from './pages/Cultura';
-import Fashion from './pages/Fashion';
-import Beauty from './pages/Beauty';
-import Tech from './pages/Tech';
-import Sanatate from './pages/Sanatate';
-import Sport from './pages/Sport';
-import Horoscop from './pages/Horoscop';
-import Contact from './pages/Contact';
-import Redactie from './pages/Redactie';
-import Terms from './pages/Terms';
-import Privacy from './pages/Privacy';
-import ArticlePage from './pages/ArticlePage';
+
+const Stiri = lazy(() => import('./pages/Stiri'));
+const Lifestyle = lazy(() => import('./pages/Lifestyle'));
+const Cultura = lazy(() => import('./pages/Cultura'));
+const Fashion = lazy(() => import('./pages/Fashion'));
+const Beauty = lazy(() => import('./pages/Beauty'));
+const Tech = lazy(() => import('./pages/Tech'));
+const Sanatate = lazy(() => import('./pages/Sanatate'));
+const Sport = lazy(() => import('./pages/Sport'));
+const Horoscop = lazy(() => import('./pages/Horoscop'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Redactie = lazy(() => import('./pages/Redactie'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const ArticlePage = lazy(() => import('./pages/ArticlePage'));
+
+function PageLoader() {
+  return (
+    <div className="min-h-[50vh] flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-revista-gold border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.hash.slice(1) || '/');
@@ -33,38 +42,94 @@ function App() {
   const renderPage = () => {
     if (currentPath.startsWith('/article/')) {
       const slug = currentPath.replace('/article/', '');
-      return <ArticlePage slug={slug} />;
+      return (
+        <Suspense fallback={<PageLoader />}>
+          <ArticlePage slug={slug} />
+        </Suspense>
+      );
     }
 
     switch (currentPath) {
       case '/':
         return <Home />;
       case '/stiri':
-        return <Stiri />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Stiri />
+          </Suspense>
+        );
       case '/lifestyle':
-        return <Lifestyle />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Lifestyle />
+          </Suspense>
+        );
       case '/cultura':
-        return <Cultura />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Cultura />
+          </Suspense>
+        );
       case '/fashion':
-        return <Fashion />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Fashion />
+          </Suspense>
+        );
       case '/beauty':
-        return <Beauty />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Beauty />
+          </Suspense>
+        );
       case '/tech':
-        return <Tech />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Tech />
+          </Suspense>
+        );
       case '/sanatate':
-        return <Sanatate />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Sanatate />
+          </Suspense>
+        );
       case '/sport':
-        return <Sport />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Sport />
+          </Suspense>
+        );
       case '/horoscop':
-        return <Horoscop />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Horoscop />
+          </Suspense>
+        );
       case '/contact':
-        return <Contact />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Contact />
+          </Suspense>
+        );
       case '/redactie':
-        return <Redactie />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Redactie />
+          </Suspense>
+        );
       case '/terms':
-        return <Terms />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Terms />
+          </Suspense>
+        );
       case '/privacy':
-        return <Privacy />;
+        return (
+          <Suspense fallback={<PageLoader />}>
+            <Privacy />
+          </Suspense>
+        );
       default:
         return <Home />;
     }

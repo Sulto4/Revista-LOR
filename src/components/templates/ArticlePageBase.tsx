@@ -76,7 +76,7 @@ export default function ArticlePageBase({
       </div>
 
       {recommendedArticles.length > 0 && (
-        <div className="bg-revista-ivory py-section">
+        <div className="bg-white py-section">
           <div className="container-revista">
             <h2 className="font-serif text-4xl font-semibold text-revista-black mb-12">
               Articole recomandate

@@ -35,10 +35,10 @@ export default function Footer() {
             <h4 className="font-serif text-sm font-normal uppercase tracking-wide text-[#F4A623] mb-4">
               UTILE
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1">
               {utilityLinks.map((link) => (
                 <li key={link.name}>
-                  <Link variant="footer" href={link.href} className="text-sm text-gray-700 hover:text-[#F4A623] transition-colors">
+                  <Link variant="footer" href={link.href} className="text-sm text-gray-700 hover:text-[#F4A623] transition-colors inline-flex items-center min-h-[44px]">
                     {link.name}
                   </Link>
                 </li>
@@ -69,12 +69,12 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Adresa ta de email"
-                className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded focus:outline-none focus:border-[#F4A623] transition-colors"
+                className="w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:border-[#F4A623] transition-colors min-h-[48px]"
                 required
               />
               <button
                 type="submit"
-                className="w-full bg-[#F4A623] hover:bg-[#E09613] text-white font-medium py-2.5 px-6 rounded transition-colors text-sm"
+                className="w-full bg-[#F4A623] hover:bg-[#E09613] text-white font-medium py-3 px-6 rounded transition-colors text-sm min-h-[48px]"
               >
                 Abonează-te
               </button>

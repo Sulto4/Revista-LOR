@@ -11,46 +11,46 @@ export default function Redactie() {
           lifestyle-ului, culturii și tendințelor moderne.
         </p>
 
-        <div className="space-y-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="space-y-12 md:space-y-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
             <div className="text-center">
-              <div className="w-48 h-48 mx-auto mb-4 bg-revista-ivory" />
-              <h3 className="font-serif text-2xl font-semibold text-revista-black mb-2">
+              <div className="w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 bg-revista-ivory" />
+              <h3 className="font-serif text-xl md:text-2xl font-semibold text-revista-black mb-2">
                 Ana Popescu
               </h3>
               <p className="text-metadata text-revista-gold uppercase tracking-wider mb-3">
-                Editor Șef
+                Editor Sef
               </p>
               <p className="text-base text-revista-text/80">
-                Pasionată de fashion și storytelling cu peste 10 ani de experiență
-                în jurnalism.
+                Pasionata de fashion si storytelling cu peste 10 ani de experienta
+                in jurnalism.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="w-48 h-48 mx-auto mb-4 bg-revista-ivory" />
-              <h3 className="font-serif text-2xl font-semibold text-revista-black mb-2">
+              <div className="w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 bg-revista-ivory" />
+              <h3 className="font-serif text-xl md:text-2xl font-semibold text-revista-black mb-2">
                 Mihai Dumitrescu
               </h3>
               <p className="text-metadata text-revista-gold uppercase tracking-wider mb-3">
-                Editor Cultură
+                Editor Cultura
               </p>
               <p className="text-base text-revista-text/80">
-                Critic de artă și curator, specialist în cultura contemporană și artă
-                vizuală.
+                Critic de arta si curator, specialist in cultura contemporana si arta
+                vizuala.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="w-48 h-48 mx-auto mb-4 bg-revista-ivory" />
-              <h3 className="font-serif text-2xl font-semibold text-revista-black mb-2">
+              <div className="w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 bg-revista-ivory" />
+              <h3 className="font-serif text-xl md:text-2xl font-semibold text-revista-black mb-2">
                 Elena Popa
               </h3>
               <p className="text-metadata text-revista-gold uppercase tracking-wider mb-3">
                 Editor Lifestyle
               </p>
               <p className="text-base text-revista-text/80">
-                Expert în wellness și dezvoltare personală, promovând un stil de viață
+                Expert in wellness si dezvoltare personala, promovand un stil de viata
                 echilibrat.
               </p>
             </div>

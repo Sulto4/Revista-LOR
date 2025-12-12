@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import OptimizedImage from '../components/ui/OptimizedImage';
+import { CategoryPageSkeleton } from '../components/ui/Skeleton';
 
 interface CategoryPageProps {
   category: string;
@@ -17,9 +18,42 @@ interface Article {
   published_at: string;
 }
 
+const CACHE_DURATION = 10 * 60 * 1000;
+
+function getCacheKey(category: string) {
+  return `revista_category_${category}`;
+}
+
+function getCachedArticles(category: string): Article[] | null {
+  try {
+    const cached = localStorage.getItem(getCacheKey(category));
+    if (!cached) return null;
+
+    const { articles, timestamp } = JSON.parse(cached);
+    if (Date.now() - timestamp > CACHE_DURATION) {
+      localStorage.removeItem(getCacheKey(category));
+      return null;
+    }
+    return articles;
+  } catch {
+    return null;
+  }
+}
+
+function setCachedArticles(category: string, articles: Article[]) {
+  try {
+    localStorage.setItem(getCacheKey(category), JSON.stringify({
+      articles,
+      timestamp: Date.now()
+    }));
+  } catch {
+  }
+}
+
 export default function CategoryPage({ category, description }: CategoryPageProps) {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(true);
+  const cachedData = getCachedArticles(category);
+  const [articles, setArticles] = useState<Article[]>(cachedData || []);
+  const [loading, setLoading] = useState(!cachedData);
 
   useEffect(() => {
     async function fetchArticles() {
@@ -33,6 +67,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
         console.error('Error fetching articles:', error);
       } else {
         setArticles(data || []);
+        setCachedArticles(category, data || []);
       }
       setLoading(false);
     }
@@ -41,21 +76,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
   }, [category]);
 
   if (loading) {
-    return (
-      <div className="container-revista py-section">
-        <div className="max-w-3xl mb-12">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold text-revista-black mb-6">
-            {category}
-          </h1>
-          <p className="text-lg text-revista-text/80 leading-relaxed">
-            {description}
-          </p>
-        </div>
-        <div className="text-center text-revista-text/60">
-          Se încarcă articolele...
-        </div>
-      </div>
-    );
+    return <CategoryPageSkeleton category={category} description={description} />;
   }
 
   if (articles.length === 0) {
@@ -93,20 +114,20 @@ export default function CategoryPage({ category, description }: CategoryPageProp
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 mb-16">
-          <div className="lg:col-span-3 space-y-8 order-2 lg:order-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 mb-16">
+          <div className="lg:col-span-3 space-y-10 lg:space-y-8 order-2 lg:order-1">
             {leftArticles.map((article) => (
               <a
                 key={article.id}
                 href={`#/article/${article.slug}`}
-                className="group cursor-pointer block"
+                className="group cursor-pointer block pb-2"
               >
                 <OptimizedImage
                   src={article.image_url}
                   alt={article.title}
                   size="small"
                   hoverScale
-                  className="w-full aspect-square md:aspect-[3/4] mb-4"
+                  className="w-full aspect-[4/5] md:aspect-[3/4] mb-4"
                 />
                 <div className="space-y-3 text-center">
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
@@ -126,7 +147,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
           <div className="lg:col-span-6 order-1 lg:order-2">
             <a
               href={`#/article/${heroArticle.slug}`}
-              className="group cursor-pointer block lg:h-full"
+              className="group cursor-pointer block lg:h-full pb-2 lg:pb-0"
             >
               <OptimizedImage
                 src={heroArticle.image_url}
@@ -151,19 +172,19 @@ export default function CategoryPage({ category, description }: CategoryPageProp
             </a>
           </div>
 
-          <div className="lg:col-span-3 space-y-8 order-3">
+          <div className="lg:col-span-3 space-y-10 lg:space-y-8 order-3">
             {rightArticles.map((article) => (
               <a
                 key={article.id}
                 href={`#/article/${article.slug}`}
-                className="group cursor-pointer block"
+                className="group cursor-pointer block pb-2"
               >
                 <OptimizedImage
                   src={article.image_url}
                   alt={article.title}
                   size="small"
                   hoverScale
-                  className="w-full aspect-square md:aspect-[3/4] mb-4"
+                  className="w-full aspect-[4/5] md:aspect-[3/4] mb-4"
                 />
                 <div className="space-y-3 text-center">
                   <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">
@@ -191,19 +212,19 @@ export default function CategoryPage({ category, description }: CategoryPageProp
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8">
               {remainingArticles.map((article) => (
                 <a
                   key={article.id}
                   href={`#/article/${article.slug}`}
-                  className="group cursor-pointer block"
+                  className="group cursor-pointer block pb-2"
                 >
                   <OptimizedImage
                     src={article.image_url}
                     alt={article.title}
                     size="medium"
                     hoverScale
-                    className="w-full aspect-square md:aspect-[4/5] mb-4"
+                    className="w-full aspect-[4/5] mb-4"
                   />
                   <div className="space-y-2">
                     <p className="text-xs font-sans uppercase tracking-wider text-revista-gold">

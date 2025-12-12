@@ -13,26 +13,26 @@ export default function Contact() {
           echipa noastră îți va răspunde în cel mai scurt timp posibil.
         </p>
 
-        <form className="space-y-6">
+        <form className="space-y-6 md:space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Input label="Nume" type="text" placeholder="Numele tău" required />
-            <Input label="Email" type="email" placeholder="email@exemplu.ro" required />
+            <Input label="Nume" type="text" placeholder="Numele tău" required className="min-h-[48px]" />
+            <Input label="Email" type="email" placeholder="email@exemplu.ro" required className="min-h-[48px]" />
           </div>
 
-          <Input label="Subiect" type="text" placeholder="Despre ce vrei să discuți?" required />
+          <Input label="Subiect" type="text" placeholder="Despre ce vrei să discuți?" required className="min-h-[48px]" />
 
           <div>
             <label className="block text-metadata font-medium mb-2 text-revista-text">
               Mesaj
             </label>
             <textarea
-              className="w-full px-4 py-3 border border-revista-separator bg-revista-white text-revista-text font-sans text-base focus:outline-none focus:border-revista-gold transition-colors h-40 resize-none"
+              className="w-full px-4 py-4 border border-revista-separator bg-revista-white text-revista-text font-sans text-base focus:outline-none focus:border-revista-gold transition-colors h-48 md:h-40 resize-none"
               placeholder="Scrie mesajul tău aici..."
               required
             />
           </div>
 
-          <Button type="submit" variant="secondary">
+          <Button type="submit" variant="secondary" className="w-full md:w-auto min-h-[48px]">
             Trimite Mesajul
           </Button>
         </form>

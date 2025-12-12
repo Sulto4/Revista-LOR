@@ -134,7 +134,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
         <div className="mb-8 md:mb-12">
           <div className="border-t border-revista-separator pt-6 mb-6 md:mb-8">
             <div className="relative flex items-center justify-between md:justify-center">
-              <h2 className="font-sans text-lg uppercase tracking-[0.3em] text-revista-black font-medium">
+              <h2 className="font-sans text-lg lg:text-[1.35rem] uppercase tracking-[0.3em] text-revista-black font-medium">
                 {title || category}
               </h2>
 

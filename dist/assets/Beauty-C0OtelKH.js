@@ -1,0 +1,1 @@
+import{j as e}from"./index-C_oBXuTL.js";import{C as r}from"./CategoryPage-BZgA8bLj.js";function u(){return e.jsx(r,{category:"Beauty",description:"Sfaturi de îngrijire, tutoriale makeup, produse noi și tendințe beauty. Ghidul tău complet pentru frumusețe și îngrijire personală."})}export{u as default};

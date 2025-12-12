@@ -1,1 +1,0 @@
-import{j as i}from"./index-DIxA1Byc.js";import{C as e}from"./CategoryPage-BmoFu0rF.js";function r(){return i.jsx(e,{category:"Fashion",description:"Tendințele sezonului, colecții exclusive și ghiduri de stil. Tot ce trebuie să știi despre moda contemporană și industria fashion."})}export{r as default};

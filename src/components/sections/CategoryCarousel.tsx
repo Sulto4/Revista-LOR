@@ -132,7 +132,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
     <section className="py-12">
       <div className="container-revista">
         <div className="mb-8">
-          <div className="mb-6">
+          <div className="border-t border-b border-revista-separator py-[6px] mb-6">
             <div className="relative flex items-center justify-between md:justify-center">
               <h2 className="font-sans text-lg lg:text-[1.35rem] uppercase tracking-[0.3em] text-revista-black font-medium">
                 {title || category}
@@ -154,7 +154,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
               )}
 
               {!isMobile && totalPages > 1 && (
-                <div className="absolute right-0 top-0 flex items-center gap-4">
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-4">
                   <button
                     onClick={handlePrevPage}
                     disabled={currentPage === 1}

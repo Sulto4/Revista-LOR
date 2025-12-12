@@ -87,7 +87,7 @@ export function CategoryCarouselSkeleton() {
     <section className="py-12">
       <div className="container-revista">
         <div className="mb-8">
-          <div className="mb-6">
+          <div className="border-t border-b border-revista-separator py-[6px] mb-6">
             <div className="flex items-center justify-center">
               <Skeleton className="h-5 w-32" />
             </div>

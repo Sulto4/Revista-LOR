@@ -1,1 +1,0 @@
-import{j as e}from"./index-C_oBXuTL.js";import{C as i}from"./CategoryPage-BZgA8bLj.js";function n(){return e.jsx(i,{category:"Lifestyle",description:"Descoperă cele mai noi tendințe în design interior, călătorii, gastronomie și wellness. Inspirație pentru un stil de viață modern și echilibrat."})}export{n as default};

@@ -12,7 +12,7 @@ export default {
         'revista-gold': '#C6A667',
       },
       fontFamily: {
-        'serif': ['Lora', 'serif'],
+        'serif': ['"Source Serif 4"', 'serif'],
         'sans': ['Inter', 'sans-serif'],
       },
       fontSize: {

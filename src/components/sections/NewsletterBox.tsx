@@ -14,7 +14,7 @@ export default function NewsletterBox() {
   return (
     <section className="section-spacing bg-revista-ivory">
       <div className="container-revista">
-        <div className="max-w-2xl mx-auto text-center py-8 md:py-10">
+        <div className="max-w-2xl mx-auto text-center py-6 md:py-10">
           <h2 className="font-serif text-4xl md:text-5xl font-semibold text-revista-black mb-6">
             Newsletter
           </h2>

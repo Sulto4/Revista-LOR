@@ -1,0 +1,1 @@
+import{j as t}from"./index-BmZuk02v.js";import{C as e}from"./CategoryPage-074iyglu.js";function n(){return t.jsx(e,{category:"Sănătate",description:"Sfaturi pentru o viață sănătoasă, nutriție, fitness și wellness mental. Ghidul tău pentru un stil de viață echilibrat și sănătos."})}export{n as default};

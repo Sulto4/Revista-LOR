@@ -1,1 +1,0 @@
-import{j as i}from"./index-Gb6lN_tM.js";import{C as e}from"./CategoryPage-CXaULf0-.js";function r(){return i.jsx(e,{category:"Știri",description:"Rămâi la curent cu cele mai importante evenimente și noutăți din România și lumea. Acoperim știri din diverse domenii: politică, economie, social și multe altele."})}export{r as default};

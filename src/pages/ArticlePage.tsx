@@ -172,7 +172,7 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
             <div className="mb-8">
               <div className="border-t border-b border-revista-separator py-3">
                 <h2 className="font-sans text-lg lg:text-[1.35rem] uppercase tracking-[0.3em] text-revista-black font-medium text-center">
-                  Citeste si
+                  Citește și
                 </h2>
               </div>
             </div>

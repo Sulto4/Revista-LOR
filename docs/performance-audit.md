@@ -79,3 +79,7 @@
 - Phase 1 should lift mobile Lighthouse performance from ~70–75 to low/mid 80s by cutting hero render delay and improving perceived paint.
 - Phase 2 adds discoverability/preload and bundle slimming, likely reaching high 80s.
 - Phase 3 (SSR/SSG) is the path to 90+ if operationally acceptable.
+
+## Cum testăm și validăm în Lighthouse
+- Ghid detaliat (setup local, preview server, pași Lighthouse, deploy pe Netlify): vezi [`docs/lighthouse-testing.md`](./lighthouse-testing.md).
+- Pentru comparații corecte, rulează Lighthouse pe build-ul de producție (`npm run build && npm run preview`) în Incognito, cu cache gol pentru „cold” și o a doua rulare pentru „warm cache”.

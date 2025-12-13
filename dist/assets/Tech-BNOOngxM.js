@@ -1,1 +1,0 @@
-import{j as i}from"./index-ydGF6Tzx.js";import{C as e}from"./CategoryPage-DUktrJ2X.js";function r(){return i.jsx(e,{category:"Tech",description:"Inovații tehnologice, gadgeturi noi și tendințe digitale. Explorează viitorul tech-ului și impactul său asupra vieții noastre."})}export{r as default};

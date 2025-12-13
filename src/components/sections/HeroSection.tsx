@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../lib/supabase';
 import ArticleCardHero from '../articles/ArticleCardHero';
 import ArticleCardCompact from '../articles/ArticleCardCompact';
@@ -64,9 +64,12 @@ function setCachedArticles(articles: Article[]) {
 }
 
 export default function HeroSection() {
-  const cachedData = getCachedArticles();
-  const [articles, setArticles] = useState<Article[]>(cachedData || []);
-  const [loading, setLoading] = useState(!cachedData);
+  const [initialState] = useState(() => {
+    const cached = getCachedArticles();
+    return { articles: cached || [], hasCache: !!cached };
+  });
+  const [articles, setArticles] = useState<Article[]>(initialState.articles);
+  const [loading, setLoading] = useState(!initialState.hasCache);
   const [leftColumnHeight, setLeftColumnHeight] = useState<number>(0);
   const leftColumnRef = useRef<HTMLDivElement>(null);
 
@@ -74,7 +77,7 @@ export default function HeroSection() {
     async function fetchArticles() {
       const { data, error } = await supabase
         .from('articles')
-        .select('*')
+        .select('id, title, slug, category, author, image_url, published_at')
         .order('published_at', { ascending: false })
         .limit(3 + HERO_LIST_LIMIT);
 
@@ -91,16 +94,59 @@ export default function HeroSection() {
     fetchArticles();
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    let resizeObserver: ResizeObserver | null = null;
+    let rafId: number | null = null;
+
     function measureLeftColumn() {
       if (leftColumnRef.current) {
-        setLeftColumnHeight(leftColumnRef.current.offsetHeight);
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          if (leftColumnRef.current) {
+            setLeftColumnHeight(leftColumnRef.current.offsetHeight);
+          }
+        });
       }
     }
 
-    measureLeftColumn();
-    window.addEventListener('resize', measureLeftColumn);
-    return () => window.removeEventListener('resize', measureLeftColumn);
+    function setupObserver() {
+      if (mediaQuery.matches && leftColumnRef.current) {
+        resizeObserver = new ResizeObserver(measureLeftColumn);
+        resizeObserver.observe(leftColumnRef.current);
+        measureLeftColumn();
+      } else {
+        setLeftColumnHeight(0);
+      }
+    }
+
+    function cleanupObserver() {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    function handleMediaChange(e: MediaQueryListEvent) {
+      cleanupObserver();
+      if (e.matches) {
+        setupObserver();
+      } else {
+        setLeftColumnHeight(0);
+      }
+    }
+
+    setupObserver();
+    mediaQuery.addEventListener('change', handleMediaChange);
+
+    return () => {
+      cleanupObserver();
+      mediaQuery.removeEventListener('change', handleMediaChange);
+    };
   }, [articles]);
 
   if (loading) {

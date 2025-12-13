@@ -10,6 +10,9 @@ interface OptimizedImageProps {
   priority?: boolean;
   hoverScale?: boolean;
   hoverDuration?: 500 | 700;
+  sizes?: string;
+  width?: number;
+  height?: number;
 }
 
 const SIZE_CONFIG: Record<ImageSize, { width: number; quality: number }> = {
@@ -20,20 +23,44 @@ const SIZE_CONFIG: Record<ImageSize, { width: number; quality: number }> = {
   hero: { width: 1600, quality: 90 },
 };
 
-function optimizeImageUrl(url: string, size: ImageSize): string {
-  const config = SIZE_CONFIG[size];
+const SRCSET_WIDTHS = [360, 480, 640, 768, 1024, 1200];
 
+function getBaseUrl(url: string): string {
+  if (url.includes('?')) {
+    return url.split('?')[0];
+  }
+  return url;
+}
+
+function optimizeImageUrl(url: string, width: number, quality: number): string {
   if (url.includes('pexels.com')) {
-    const separator = url.includes('?') ? '&' : '?';
-    return `${url}${separator}auto=compress&cs=tinysrgb&w=${config.width}&q=${config.quality}`;
+    const baseUrl = getBaseUrl(url);
+    return `${baseUrl}?auto=compress&cs=tinysrgb&w=${width}&q=${quality}&fm=webp`;
   }
 
   if (url.includes('unsplash.com')) {
-    const separator = url.includes('?') ? '&' : '?';
-    return `${url}${separator}w=${config.width}&q=${config.quality}&auto=format`;
+    const baseUrl = getBaseUrl(url);
+    return `${baseUrl}?w=${width}&q=${quality}&auto=format`;
   }
 
   return url;
+}
+
+function generateSrcSet(url: string, quality: number): string {
+  if (!url.includes('pexels.com') && !url.includes('unsplash.com')) {
+    return '';
+  }
+
+  return SRCSET_WIDTHS
+    .map((w) => `${optimizeImageUrl(url, w, quality)} ${w}w`)
+    .join(', ');
+}
+
+function getDefaultSizes(priority: boolean): string {
+  if (priority) {
+    return '(min-width: 1024px) 50vw, 100vw';
+  }
+  return '(max-width: 768px) 100vw, 33vw';
 }
 
 export default function OptimizedImage({
@@ -44,6 +71,9 @@ export default function OptimizedImage({
   priority = false,
   hoverScale = false,
   hoverDuration = 500,
+  sizes,
+  width,
+  height,
 }: OptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -71,7 +101,10 @@ export default function OptimizedImage({
     return () => observer.disconnect();
   }, [priority]);
 
-  const optimizedSrc = optimizeImageUrl(src, size);
+  const config = SIZE_CONFIG[size];
+  const optimizedSrc = optimizeImageUrl(src, config.width, config.quality);
+  const srcSet = generateSrcSet(src, config.quality);
+  const imageSizes = sizes || getDefaultSizes(priority);
 
   return (
     <div ref={imgRef} className={`relative overflow-hidden ${className}`}>
@@ -84,7 +117,11 @@ export default function OptimizedImage({
       {isInView && !hasError && (
         <img
           src={optimizedSrc}
+          srcSet={srcSet || undefined}
+          sizes={srcSet ? imageSizes : undefined}
           alt={alt}
+          width={width}
+          height={height}
           loading={priority ? 'eager' : 'lazy'}
           fetchPriority={priority ? 'high' : 'auto'}
           decoding={priority ? 'sync' : 'async'}

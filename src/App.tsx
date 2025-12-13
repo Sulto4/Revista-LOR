@@ -19,6 +19,22 @@ const Terms = lazy(() => import('./pages/Terms'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const ArticlePage = lazy(() => import('./pages/ArticlePage'));
 
+const routePrefetchers = [
+  () => import('./pages/Stiri'),
+  () => import('./pages/Lifestyle'),
+  () => import('./pages/Cultura'),
+  () => import('./pages/Fashion'),
+  () => import('./pages/Beauty'),
+  () => import('./pages/Tech'),
+  () => import('./pages/Sanatate'),
+  () => import('./pages/Sport'),
+  () => import('./pages/Horoscop'),
+  () => import('./pages/Contact'),
+  () => import('./pages/Redactie'),
+  () => import('./pages/Terms'),
+  () => import('./pages/Privacy'),
+];
+
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.hash.slice(1) || '/');
 
@@ -30,6 +46,27 @@ function App() {
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    const prefetchRoutes = () => {
+      routePrefetchers.forEach((prefetch) => {
+        prefetch().catch(() => {});
+      });
+    };
+
+    const idleHandle = (window as typeof window & { requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number })
+      .requestIdleCallback?.(prefetchRoutes, { timeout: 2000 }) ?? window.setTimeout(prefetchRoutes, 1200);
+
+    return () => {
+      const cancelIdle = (window as typeof window & { cancelIdleCallback?: (handle: number) => void }).cancelIdleCallback;
+      if (cancelIdle && typeof idleHandle === 'number') {
+        cancelIdle(idleHandle);
+        return;
+      }
+
+      clearTimeout(idleHandle as number);
+    };
   }, []);
 
   const renderPage = () => {

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import OptimizedImage from '../ui/OptimizedImage';
+import { getPlaceholderDataUrl } from '../../utils/imagePlaceholder';
 
 interface Article {
   id: string;
@@ -11,6 +12,7 @@ interface Article {
   author: string;
   image_url: string;
   published_at: string;
+  placeholderDataUrl?: string;
 }
 
 interface CacheEntry {
@@ -47,7 +49,7 @@ function getCachedArticles(category: string): Article[] | null {
       localStorage.removeItem(key);
       return null;
     }
-    return entry.data;
+    return entry.data.map(normalizeArticle);
   } catch {
     return null;
   }
@@ -61,6 +63,13 @@ function setCachedArticles(category: string, data: Article[]): void {
   } catch {
     // Ignore storage errors
   }
+}
+
+function normalizeArticle(article: Article): Article {
+  return {
+    ...article,
+    placeholderDataUrl: article.placeholderDataUrl || getPlaceholderDataUrl(article.image_url),
+  };
 }
 
 export default function CategoryCarousel({ category, title }: CategoryCarouselProps) {
@@ -111,7 +120,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
 
     const cached = getCachedArticles(category);
     if (cached) {
-      setArticles(cached);
+      setArticles(cached.map(normalizeArticle));
       setHasFetched(true);
       return;
     }
@@ -127,7 +136,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
     if (error) {
       console.error('Error fetching articles:', error);
     } else {
-      const articles = data || [];
+      const articles = (data || []).map(normalizeArticle);
       setArticles(articles);
       setCachedArticles(category, articles);
     }
@@ -322,6 +331,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
                     src={article.image_url}
                     alt={article.title}
                     size="medium"
+                    placeholderDataUrl={article.placeholderDataUrl}
                     className="w-full aspect-[3/4] mb-4"
                   />
                   <div className="space-y-2">
@@ -366,6 +376,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
                   src={article.image_url}
                   alt={article.title}
                   size="medium"
+                  placeholderDataUrl={article.placeholderDataUrl}
                   hoverScale
                   className="w-full aspect-square md:aspect-[3/4] mb-4"
                 />

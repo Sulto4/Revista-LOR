@@ -206,10 +206,12 @@ export default function CategoryPage({ category, description }: CategoryPageProp
       {remainingArticles.length > 0 && (
         <div className="bg-revista-ivory py-section">
           <div className="container-revista">
-            <div className="border-t border-revista-separator pt-6 mb-12">
-              <h2 className="font-sans text-lg uppercase tracking-[0.3em] text-revista-black font-medium text-center">
+            <div className="mb-12">
+              <div className="h-px w-full bg-revista-separator" />
+              <h2 className="font-sans text-lg uppercase tracking-[0.3em] text-revista-black font-medium text-center py-6">
                 Mai multe articole din {category}
               </h2>
+              <div className="h-px w-full bg-revista-separator" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8">

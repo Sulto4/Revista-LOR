@@ -36,28 +36,31 @@ const HERO_LIST_LIMIT = 6;
 const CACHE_KEY = 'revista_hero_articles';
 const CACHE_DURATION = 5 * 60 * 1000;
 
-function getCachedArticles(): Article[] | null {
+interface CachedArticles {
+  articles: Article[];
+  isStale: boolean;
+}
+
+function getCachedArticles(): CachedArticles {
   try {
     const cached = localStorage.getItem(CACHE_KEY);
-    if (!cached) return null;
+    if (!cached) return { articles: [], isStale: false };
 
     const { articles, timestamp } = JSON.parse(cached);
-    if (Date.now() - timestamp > CACHE_DURATION) {
-      localStorage.removeItem(CACHE_KEY);
-      return null;
-    }
-    return articles;
+    const isStale = Date.now() - timestamp > CACHE_DURATION;
+    return { articles: articles || [], isStale };
   } catch {
-    return null;
+    return { articles: [], isStale: false };
   }
 }
 
 function setCachedArticles(articles: Article[]) {
   try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
+    const payload = {
       articles,
-      timestamp: Date.now()
-    }));
+      timestamp: Date.now(),
+    };
+    localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
   } catch {
     // Storage full or unavailable
   }
@@ -66,7 +69,11 @@ function setCachedArticles(articles: Article[]) {
 export default function HeroSection() {
   const [initialState] = useState(() => {
     const cached = getCachedArticles();
-    return { articles: cached || [], hasCache: !!cached };
+    return {
+      articles: cached.articles,
+      hasCache: cached.articles.length > 0,
+      isStale: cached.isStale,
+    };
   });
   const [articles, setArticles] = useState<Article[]>(initialState.articles);
   const [loading, setLoading] = useState(!initialState.hasCache);
@@ -74,12 +81,20 @@ export default function HeroSection() {
   const leftColumnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let isActive = true;
+
     async function fetchArticles() {
+      if (!initialState.hasCache) {
+        setLoading(true);
+      }
+
       const { data, error } = await supabase
         .from('articles')
         .select('id, title, slug, category, author, image_url, published_at')
         .order('published_at', { ascending: false })
         .limit(3 + HERO_LIST_LIMIT);
+
+      if (!isActive) return;
 
       if (error) {
         console.error('Error fetching articles:', error);
@@ -92,7 +107,11 @@ export default function HeroSection() {
     }
 
     fetchArticles();
-  }, []);
+
+    return () => {
+      isActive = false;
+    };
+  }, [initialState.hasCache, initialState.isStale]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 1024px)');

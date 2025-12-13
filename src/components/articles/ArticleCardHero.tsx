@@ -6,6 +6,9 @@ interface ArticleCardHeroProps {
   imageHeight?: number;
 }
 
+const HERO_PLACEHOLDER_DATA_URL =
+  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2NzUiIHZpZXdCb3g9IjAgMCAxMjAwIDY3NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIHN0b3AtY29sb3I9IiNmMmVmZTgiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNmOGY2ZTEiIG9mZnNldD0iMTAwJSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjY3NSIgZmlsbD0idXJsKCNnKSIvPjwvc3ZnPg==';
+
 export default function ArticleCardHero({ article, imageHeight }: ArticleCardHeroProps) {
   return (
     <article className="group cursor-pointer">
@@ -16,11 +19,12 @@ export default function ArticleCardHero({ article, imageHeight }: ArticleCardHer
         <OptimizedImage
           src={article.imageUrl}
           alt={article.title}
-          size="large"
+          size="hero"
           priority
           hoverScale
           hoverDuration={700}
           className="w-full h-full"
+          placeholderDataUrl={HERO_PLACEHOLDER_DATA_URL}
         />
       </div>
 

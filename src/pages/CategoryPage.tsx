@@ -40,15 +40,16 @@ function getCachedArticles(category: string): Article[] | null {
   }
 }
 
-function setCachedArticles(category: string, articles: Article[]) {
-  try {
-    localStorage.setItem(getCacheKey(category), JSON.stringify({
-      articles,
-      timestamp: Date.now()
-    }));
-  } catch {
+  function setCachedArticles(category: string, articles: Article[]) {
+    try {
+      localStorage.setItem(getCacheKey(category), JSON.stringify({
+        articles,
+        timestamp: Date.now()
+      }));
+    } catch {
+      // Ignore storage write failures to keep rendering
+    }
   }
-}
 
 export default function CategoryPage({ category, description }: CategoryPageProps) {
   const cachedData = getCachedArticles(category);

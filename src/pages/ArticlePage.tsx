@@ -41,15 +41,16 @@ function getCachedArticle(slug: string): Article | null {
   }
 }
 
-function setCachedArticle(slug: string, article: Article) {
-  try {
-    localStorage.setItem(getCacheKey(slug), JSON.stringify({
-      article,
-      timestamp: Date.now()
-    }));
-  } catch {
+  function setCachedArticle(slug: string, article: Article) {
+    try {
+      localStorage.setItem(getCacheKey(slug), JSON.stringify({
+        article,
+        timestamp: Date.now()
+      }));
+    } catch {
+      // Ignore storage write failures to keep rendering
+    }
   }
-}
 
 export default function ArticlePage({ slug }: ArticlePageProps) {
   const cachedData = getCachedArticle(slug);

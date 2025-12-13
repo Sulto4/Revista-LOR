@@ -21,7 +21,7 @@ const SIZE_CONFIG: Record<ImageSize, { width: number; quality: number }> = {
   small: { width: 400, quality: 75 },
   medium: { width: 800, quality: 80 },
   large: { width: 1200, quality: 85 },
-  hero: { width: 1600, quality: 90 },
+  hero: { width: 1400, quality: 82 },
 };
 
 const SRCSET_WIDTHS = [360, 480, 640, 768, 1024, 1200];

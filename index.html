@@ -28,19 +28,6 @@
         supabaseUrl &&
         `${supabaseUrl}/rest/v1/articles?select=id,title,slug,category,author,image_url,published_at&order=published_at.desc&limit=${HERO_LIMIT}`;
 
-      const hasFreshCache = () => {
-        try {
-          const cached = localStorage.getItem(CACHE_KEY);
-          if (!cached) return false;
-
-          const { timestamp } = JSON.parse(cached);
-          return Date.now() - timestamp < CACHE_DURATION;
-        } catch (error) {
-          console.warn('Hero cache not available', error);
-          return false;
-        }
-      };
-
       const formatDate = (value) =>
         new Date(value).toLocaleDateString('ro-RO', {
           day: 'numeric',
@@ -60,6 +47,40 @@
         return undefined;
       };
 
+      const optimizeHeroUrl = (url) => {
+        if (!url) return null;
+        const baseUrl = url.split('?')[0];
+
+        if (url.includes('pexels.com')) {
+          return `${baseUrl}?auto=compress&cs=tinysrgb&w=1400&q=82&fm=webp`;
+        }
+
+        if (url.includes('unsplash.com')) {
+          return `${baseUrl}?w=1400&q=82&auto=format`;
+        }
+
+        return url;
+      };
+
+      const hasFreshCache = () => {
+        try {
+          const cached = localStorage.getItem(CACHE_KEY);
+          if (!cached) return false;
+
+          const { timestamp } = JSON.parse(cached);
+          const isFresh = Date.now() - timestamp < CACHE_DURATION;
+
+          if (isFresh && !window.__REVISTA_HERO_PREFETCH__) {
+            window.__REVISTA_HERO_PREFETCH__ = JSON.parse(cached);
+          }
+
+          return isFresh;
+        } catch (error) {
+          console.warn('Hero cache not available', error);
+          return false;
+        }
+      };
+
       const cacheArticles = (data) => {
         try {
           const articles = data.map((article) => ({
@@ -73,13 +94,25 @@
             placeholderDataUrl: getPlaceholderDataUrl(article.image_url)
           }));
 
-          localStorage.setItem(
-            CACHE_KEY,
-            JSON.stringify({
-              articles,
-              timestamp: Date.now()
-            })
-          );
+          const payload = {
+            articles,
+            timestamp: Date.now()
+          };
+
+          localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+          window.__REVISTA_HERO_PREFETCH__ = payload;
+          window.dispatchEvent(new CustomEvent('revista:hero-prefetched', { detail: payload }));
+
+          const heroImage = optimizeHeroUrl(articles[0]?.imageUrl);
+          if (heroImage && !document.querySelector('link[data-hero-preload]')) {
+            const preload = document.createElement('link');
+            preload.rel = 'preload';
+            preload.as = 'image';
+            preload.href = heroImage;
+            preload.fetchPriority = 'high';
+            preload.setAttribute('data-hero-preload', 'true');
+            document.head.appendChild(preload);
+          }
         } catch (error) {
           console.warn('Hero cache skipped', error);
         }
@@ -114,19 +147,7 @@
         }
       }
 
-      const schedulePreload = () => {
-        if (typeof requestIdleCallback === 'function') {
-          requestIdleCallback(() => preloadHero(), { timeout: 500 });
-        } else {
-          setTimeout(preloadHero, 0);
-        }
-      };
-
-      if (document.readyState === 'complete') {
-        schedulePreload();
-      } else {
-        window.addEventListener('load', schedulePreload, { once: true });
-      }
+      preloadHero();
     </script>
     <title>Revista LOR</title>
     <meta property="og:image" content="https://bolt.new/static/og_default.png">

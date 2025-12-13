@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import OptimizedImage from '../ui/OptimizedImage';
@@ -13,19 +13,67 @@ interface Article {
   published_at: string;
 }
 
+interface CacheEntry {
+  data: Article[];
+  timestamp: number;
+}
+
 interface CategoryCarouselProps {
   category: string;
   title?: string;
+}
+
+const CACHE_TTL = 5 * 60 * 1000;
+const ARTICLES_LIMIT = 8;
+
+function getSafeCacheKey(category: string): string {
+  const safeKey = category
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+  return `revista_cache_carousel_${safeKey}`;
+}
+
+function getCachedArticles(category: string): Article[] | null {
+  try {
+    const key = getSafeCacheKey(category);
+    const cached = localStorage.getItem(key);
+    if (!cached) return null;
+
+    const entry: CacheEntry = JSON.parse(cached);
+    if (Date.now() - entry.timestamp > CACHE_TTL) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return entry.data;
+  } catch {
+    return null;
+  }
+}
+
+function setCachedArticles(category: string, data: Article[]): void {
+  try {
+    const key = getSafeCacheKey(category);
+    const entry: CacheEntry = { data, timestamp: Date.now() };
+    localStorage.setItem(key, JSON.stringify(entry));
+  } catch {
+    // Ignore storage errors
+  }
 }
 
 export default function CategoryCarousel({ category, title }: CategoryCarouselProps) {
   const [articles, setArticles] = useState<Article[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [mobileIndex, setMobileIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [isInView, setIsInView] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const articlesPerPage = 4;
 
+  const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const touchCurrentX = useRef(0);
@@ -42,24 +90,56 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
   }, []);
 
   useEffect(() => {
-    async function fetchArticles() {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('articles')
-        .select('*')
-        .eq('category', category)
-        .order('published_at', { ascending: false });
+    const section = sectionRef.current;
+    if (!section) return;
 
-      if (error) {
-        console.error('Error fetching articles:', error);
-      } else {
-        setArticles(data || []);
-      }
-      setLoading(false);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isInView) {
+          setIsInView(true);
+        }
+      },
+      { rootMargin: '600px', threshold: 0 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [isInView]);
+
+  const fetchArticles = useCallback(async () => {
+    if (hasFetched) return;
+
+    const cached = getCachedArticles(category);
+    if (cached) {
+      setArticles(cached);
+      setHasFetched(true);
+      return;
     }
 
-    fetchArticles();
-  }, [category]);
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('articles')
+      .select('id, title, slug, category, author, image_url, published_at')
+      .eq('category', category)
+      .order('published_at', { ascending: false })
+      .limit(ARTICLES_LIMIT);
+
+    if (error) {
+      console.error('Error fetching articles:', error);
+    } else {
+      const articles = data || [];
+      setArticles(articles);
+      setCachedArticles(category, articles);
+    }
+    setLoading(false);
+    setHasFetched(true);
+  }, [category, hasFetched]);
+
+  useEffect(() => {
+    if (isInView && !hasFetched) {
+      fetchArticles();
+    }
+  }, [isInView, hasFetched, fetchArticles]);
 
   const totalPages = Math.ceil(articles.length / articlesPerPage);
   const startIndex = (currentPage - 1) * articlesPerPage;
@@ -110,11 +190,61 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
     setDragOffset(0);
   };
 
+  if (!isInView) {
+    return (
+      <section ref={sectionRef} className="py-12">
+        <div className="container-revista">
+          <div className="mb-8">
+            <div className="border-t border-b border-revista-separator py-3 mb-6">
+              <div className="relative flex items-center justify-center">
+                <h2 className="font-sans text-lg lg:text-[1.35rem] uppercase tracking-[0.3em] text-revista-black font-medium">
+                  {title || category}
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="space-y-4">
+                <div className="w-full aspect-square md:aspect-[3/4] bg-revista-separator/30" />
+                <div className="space-y-2">
+                  <div className="h-3 w-16 bg-revista-separator/30" />
+                  <div className="h-6 w-full bg-revista-separator/30" />
+                  <div className="h-3 w-24 bg-revista-separator/30" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (loading) {
     return (
-      <section className="py-12">
+      <section ref={sectionRef} className="py-12">
         <div className="container-revista">
-          <div className="text-center text-revista-text/60">Se incarca...</div>
+          <div className="mb-8">
+            <div className="border-t border-b border-revista-separator py-3 mb-6">
+              <div className="relative flex items-center justify-center">
+                <h2 className="font-sans text-lg lg:text-[1.35rem] uppercase tracking-[0.3em] text-revista-black font-medium">
+                  {title || category}
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="space-y-4 animate-pulse">
+                <div className="w-full aspect-square md:aspect-[3/4] bg-revista-separator/50" />
+                <div className="space-y-2">
+                  <div className="h-3 w-16 bg-revista-separator/50 rounded" />
+                  <div className="h-6 w-full bg-revista-separator/50 rounded" />
+                  <div className="h-3 w-24 bg-revista-separator/50 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     );
@@ -129,7 +259,7 @@ export default function CategoryCarousel({ category, title }: CategoryCarouselPr
   const mobileTranslateX = -(mobileIndex * (articleWidthPercent + gapPercent)) + dragOffset / (containerRef.current?.offsetWidth || 1) * 100;
 
   return (
-    <section className="py-12">
+    <section ref={sectionRef} className="py-12">
       <div className="container-revista">
         <div className="mb-8">
           <div className="border-t border-b border-revista-separator py-3 mb-6">

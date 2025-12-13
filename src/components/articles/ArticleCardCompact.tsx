@@ -8,13 +8,14 @@ interface ArticleCardCompactProps {
 export default function ArticleCardCompact({ article }: ArticleCardCompactProps) {
   return (
     <article className="group cursor-pointer h-full flex flex-col">
-      <OptimizedImage
-        src={article.imageUrl}
-        alt={article.title}
-        size="small"
-        hoverScale
-        className="w-full aspect-square md:aspect-[5/6] mb-4"
-      />
+        <OptimizedImage
+          src={article.imageUrl}
+          alt={article.title}
+          size="small"
+          placeholderDataUrl={article.placeholderDataUrl}
+          hoverScale
+          className="w-full aspect-square md:aspect-[5/6] mb-4"
+        />
 
       <div className="flex flex-col gap-2 text-center shrink-0">
         <p className="text-xs font-sans uppercase tracking-wider text-revista-gold leading-none">

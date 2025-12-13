@@ -18,6 +18,7 @@ export default function ArticleCardHero({ article, imageHeight }: ArticleCardHer
           alt={article.title}
           size="large"
           priority
+          placeholderDataUrl={article.placeholderDataUrl}
           hoverScale
           hoverDuration={700}
           className="w-full h-full"

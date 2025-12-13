@@ -5,6 +5,7 @@ import ArticleCardCompact from '../articles/ArticleCardCompact';
 import ArticleCardList from '../articles/ArticleCardList';
 import { Article } from '../articles/ArticleCardSmall';
 import { HeroSkeleton } from '../ui/Skeleton';
+import { getPlaceholderDataUrl } from '../../utils/imagePlaceholder';
 
 interface DBArticle {
   id: string;
@@ -17,6 +18,8 @@ interface DBArticle {
 }
 
 function formatArticle(article: DBArticle): Article {
+  const placeholderDataUrl = getPlaceholderDataUrl(article.image_url);
+
   return {
     id: article.id,
     title: article.title,
@@ -28,7 +31,8 @@ function formatArticle(article: DBArticle): Article {
       year: 'numeric'
     }),
     imageUrl: article.image_url,
-    slug: article.slug
+    slug: article.slug,
+    placeholderDataUrl
   };
 }
 
@@ -85,8 +89,10 @@ export default function HeroSection() {
         console.error('Error fetching articles:', error);
       } else {
         const formattedArticles = (data || []).map(formatArticle);
-        setArticles(formattedArticles);
-        setCachedArticles(formattedArticles);
+        if (formattedArticles.length > 0) {
+          setArticles(formattedArticles);
+          setCachedArticles(formattedArticles);
+        }
       }
       setLoading(false);
     }

@@ -13,6 +13,7 @@ interface OptimizedImageProps {
   sizes?: string;
   width?: number;
   height?: number;
+  placeholderDataUrl?: string;
 }
 
 const SIZE_CONFIG: Record<ImageSize, { width: number; quality: number }> = {
@@ -74,6 +75,7 @@ export default function OptimizedImage({
   sizes,
   width,
   height,
+  placeholderDataUrl,
 }: OptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
@@ -106,8 +108,21 @@ export default function OptimizedImage({
   const srcSet = generateSrcSet(src, config.quality);
   const imageSizes = sizes || getDefaultSizes(priority);
 
+  const shouldShowPlaceholder = Boolean(placeholderDataUrl && !isLoaded && !hasError);
+
   return (
     <div ref={imgRef} className={`relative overflow-hidden ${className}`}>
+      {placeholderDataUrl && (
+        <img
+          src={placeholderDataUrl}
+          aria-hidden
+          alt=""
+          className={`absolute inset-0 h-full w-full object-cover blur-xl scale-110 transition-opacity duration-500 ${
+            shouldShowPlaceholder ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      )}
+
       <div
         className={`absolute inset-0 bg-gradient-to-r from-revista-separator via-revista-ivory to-revista-separator bg-[length:200%_100%] transition-opacity duration-500 ${
           isLoaded ? 'opacity-0' : 'opacity-100 animate-shimmer'

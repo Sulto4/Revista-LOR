@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
 import Link from '../ui/Link';
 
 const utilityLinks = [
@@ -9,23 +8,8 @@ const utilityLinks = [
   { name: 'Politica de confidențialitate', href: '#/privacy' },
 ];
 
-const navigationItems = [
-  { name: 'Home', href: '#/' },
-  { name: 'Știri', href: '#/stiri' },
-  { name: 'Lifestyle', href: '#/lifestyle' },
-  { name: 'Cultură', href: '#/cultura' },
-  { name: 'Fashion', href: '#/fashion' },
-  { name: 'Beauty', href: '#/beauty' },
-  { name: 'Tech', href: '#/tech' },
-  { name: 'Sănătate', href: '#/sanatate' },
-  { name: 'Sport', href: '#/sport' },
-  { name: 'Horoscop', href: '#/horoscop' },
-  { name: 'Contact', href: '#/contact' },
-];
-
 export default function Footer() {
   const [email, setEmail] = useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,68 +20,18 @@ export default function Footer() {
   return (
     <footer className="bg-white border-t border-gray-200 mt-section">
       <div className="container-revista py-12 md:py-16">
-        <div className="md:hidden mb-8">
-          <div className="grid grid-cols-3 items-center mb-4">
-            <div />
-            <a href="#/" className="flex justify-center">
-              <img
-                src="/revista_lor_logo.png"
-                alt="Revista LOR"
-                className="h-8 w-auto object-contain"
-              />
-            </a>
-            <div className="flex justify-end">
-              <button
-                className="text-revista-black p-2"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Toggle menu"
-              >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-          <p className="text-sm text-gray-600 text-center leading-relaxed px-4">
+        <div className="md:hidden mb-8 text-center">
+          <a href="#/" className="inline-block mb-4">
+            <img
+              src="/revista_lor_logo.png"
+              alt="Revista LOR"
+              className="h-10 w-auto object-contain"
+            />
+          </a>
+          <p className="text-sm text-gray-600 leading-relaxed px-4">
             Platformă editorială pentru noua generație. Actualitate, cultură, lifestyle & beyond.
           </p>
         </div>
-
-        {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-[100]">
-            <div
-              className="absolute inset-0 bg-black/40"
-              onClick={() => setIsMobileMenuOpen(false)}
-              aria-label="Close menu"
-            />
-            <div className="absolute top-0 right-0 h-full w-[80%] bg-revista-white shadow-2xl overflow-y-auto">
-              <div className="flex justify-end p-4">
-                <button
-                  className="text-revista-black p-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  aria-label="Close menu"
-                >
-                  <X size={24} />
-                </button>
-              </div>
-              <nav className="py-4 flex flex-col">
-                {navigationItems.map((item, index) => (
-                  <div key={item.name}>
-                    <Link
-                      variant="nav"
-                      href={item.href}
-                      className="block text-xl py-4 px-8 hover:bg-revista-gold/5 transition-all"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                    {index < navigationItems.length - 1 && (
-                      <div className="border-b border-revista-separator/30 mx-6" />
-                    )}
-                  </div>
-                ))}
-              </nav>
-            </div>
-          </div>
-        )}
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           <div className="hidden md:block">

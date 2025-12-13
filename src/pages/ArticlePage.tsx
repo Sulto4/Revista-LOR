@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import OptimizedImage from '../components/ui/OptimizedImage';
 import { ArticlePageSkeleton } from '../components/ui/Skeleton';
+import { getPlaceholderDataUrl } from '../utils/imagePlaceholder';
 
 interface Article {
   id: string;
@@ -13,6 +14,7 @@ interface Article {
   content: string;
   image_url: string;
   published_at: string;
+  placeholderDataUrl?: string;
 }
 
 interface ArticlePageProps {
@@ -52,24 +54,33 @@ function setCachedArticle(slug: string, article: Article) {
 }
 
 export default function ArticlePage({ slug }: ArticlePageProps) {
+  const formatArticle = (article: Article): Article => ({
+    ...article,
+    excerpt: article.excerpt ?? '',
+    content: article.content ?? '',
+    placeholderDataUrl: article.placeholderDataUrl || getPlaceholderDataUrl(article.image_url),
+  });
+
   const cachedData = getCachedArticle(slug);
-  const [article, setArticle] = useState<Article | null>(cachedData);
-  const [loading, setLoading] = useState(!cachedData);
+  const formattedCache = cachedData ? formatArticle(cachedData) : null;
+  const [article, setArticle] = useState<Article | null>(formattedCache);
+  const [loading, setLoading] = useState(!formattedCache);
   const [recommendedArticles, setRecommendedArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     async function fetchArticle() {
       const { data, error } = await supabase
         .from('articles')
-        .select('*')
+        .select('id, title, slug, category, author, excerpt, content, image_url, published_at')
         .eq('slug', slug)
         .maybeSingle();
 
       if (error) {
         console.error('Error fetching article:', error);
       } else if (data) {
-        setArticle(data);
-        setCachedArticle(slug, data);
+        const formatted = formatArticle(data);
+        setArticle(formatted);
+        setCachedArticle(slug, formatted);
       }
       setLoading(false);
     }
@@ -83,7 +94,7 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
 
       const { data, error } = await supabase
         .from('articles')
-        .select('*')
+        .select('id, title, slug, category, author, image_url, published_at')
         .eq('category', article.category)
         .neq('id', article.id)
         .order('published_at', { ascending: false })
@@ -92,7 +103,7 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
       if (error) {
         console.error('Error fetching recommended articles:', error);
       } else if (data && data.length >= 4) {
-        setRecommendedArticles(data);
+        setRecommendedArticles(data.map(formatArticle));
       } else {
         setRecommendedArticles([]);
       }
@@ -151,6 +162,7 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
               src={article.image_url}
               alt={article.title}
               size="large"
+              placeholderDataUrl={article.placeholderDataUrl}
               priority
               className="w-full aspect-[4/3] md:aspect-[16/9] mb-8 md:mb-12"
             />
@@ -188,6 +200,7 @@ export default function ArticlePage({ slug }: ArticlePageProps) {
                     src={rec.image_url}
                     alt={rec.title}
                     size="medium"
+                    placeholderDataUrl={rec.placeholderDataUrl}
                     hoverScale
                     className="w-full aspect-[3/4] mb-4"
                   />

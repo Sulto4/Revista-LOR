@@ -5,6 +5,7 @@ import ArticleCardCompact from '../articles/ArticleCardCompact';
 import ArticleCardList from '../articles/ArticleCardList';
 import { Article } from '../articles/ArticleCardSmall';
 import { HeroSkeleton } from '../ui/Skeleton';
+import { getPlaceholderDataUrl } from '../../utils/imagePlaceholder';
 
 interface DBArticle {
   id: string;
@@ -17,6 +18,8 @@ interface DBArticle {
 }
 
 function formatArticle(article: DBArticle): Article {
+  const placeholderDataUrl = getPlaceholderDataUrl(article.image_url);
+
   return {
     id: article.id,
     title: article.title,
@@ -28,13 +31,26 @@ function formatArticle(article: DBArticle): Article {
       year: 'numeric'
     }),
     imageUrl: article.image_url,
-    slug: article.slug
+    slug: article.slug,
+    placeholderDataUrl
   };
 }
 
 const HERO_LIST_LIMIT = 6;
 const CACHE_KEY = 'revista_hero_articles';
 const CACHE_DURATION = 5 * 60 * 1000;
+
+function getPrefetchedArticles(): Article[] | null {
+  if (typeof window === 'undefined') return null;
+  const payload = window.__REVISTA_HERO_PREFETCH__;
+  if (!payload) return null;
+
+  if (Date.now() - payload.timestamp > CACHE_DURATION) {
+    return null;
+  }
+
+  return payload.articles;
+}
 
 function getCachedArticles(): Article[] | null {
   try {
@@ -65,8 +81,10 @@ function setCachedArticles(articles: Article[]) {
 
 export default function HeroSection() {
   const [initialState] = useState(() => {
+    const prefetched = getPrefetchedArticles();
     const cached = getCachedArticles();
-    return { articles: cached || [], hasCache: !!cached };
+    const articles = prefetched || cached || [];
+    return { articles, hasCache: articles.length > 0 };
   });
   const [articles, setArticles] = useState<Article[]>(initialState.articles);
   const [loading, setLoading] = useState(!initialState.hasCache);
@@ -74,6 +92,8 @@ export default function HeroSection() {
   const leftColumnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function fetchArticles() {
       const { data, error } = await supabase
         .from('articles')
@@ -85,14 +105,45 @@ export default function HeroSection() {
         console.error('Error fetching articles:', error);
       } else {
         const formattedArticles = (data || []).map(formatArticle);
-        setArticles(formattedArticles);
-        setCachedArticles(formattedArticles);
+        if (formattedArticles.length > 0 && isMounted) {
+          setArticles(formattedArticles);
+          setCachedArticles(formattedArticles);
+          setLoading(false);
+        }
       }
-      setLoading(false);
+
+      if (isMounted) {
+        setLoading(false);
+      }
     }
 
     fetchArticles();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
+
+  useEffect(() => {
+    if (!loading) return;
+
+    const handlePrefetch = (event: Event) => {
+      const detail = (event as CustomEvent<{ articles?: Article[] }>).detail;
+      const prefetchedArticles = detail?.articles || window.__REVISTA_HERO_PREFETCH__?.articles;
+
+      if (prefetchedArticles && prefetchedArticles.length > 0) {
+        setArticles(prefetchedArticles);
+        setCachedArticles(prefetchedArticles);
+        setLoading(false);
+      }
+    };
+
+    window.addEventListener('revista:hero-prefetched', handlePrefetch);
+
+    return () => {
+      window.removeEventListener('revista:hero-prefetched', handlePrefetch);
+    };
+  }, [loading]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 1024px)');

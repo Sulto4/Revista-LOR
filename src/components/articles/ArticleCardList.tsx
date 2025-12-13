@@ -23,6 +23,7 @@ export default function ArticleCardList({ article }: ArticleCardListProps) {
         src={article.imageUrl}
         alt={article.title}
         size="thumbnail"
+        placeholderDataUrl={article.placeholderDataUrl}
         hoverScale
         className="flex-shrink-0 w-20 h-20"
       />

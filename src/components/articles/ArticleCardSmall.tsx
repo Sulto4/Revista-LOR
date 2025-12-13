@@ -8,6 +8,7 @@ export interface Article {
   date: string;
   imageUrl: string;
   slug?: string;
+  placeholderDataUrl?: string;
 }
 
 interface ArticleCardSmallProps {

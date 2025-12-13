@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import OptimizedImage from '../components/ui/OptimizedImage';
 import { CategoryPageSkeleton } from '../components/ui/Skeleton';
+import { getPlaceholderDataUrl } from '../utils/imagePlaceholder';
 
 interface CategoryPageProps {
   category: string;
@@ -16,6 +17,7 @@ interface Article {
   author: string;
   image_url: string;
   published_at: string;
+  placeholderDataUrl?: string;
 }
 
 const CACHE_DURATION = 10 * 60 * 1000;
@@ -51,7 +53,12 @@ function setCachedArticles(category: string, articles: Article[]) {
 }
 
 export default function CategoryPage({ category, description }: CategoryPageProps) {
-  const cachedData = getCachedArticles(category);
+  const normalizeArticle = (article: Article): Article => ({
+    ...article,
+    placeholderDataUrl: article.placeholderDataUrl || getPlaceholderDataUrl(article.image_url),
+  });
+
+  const cachedData = getCachedArticles(category)?.map(normalizeArticle);
   const [articles, setArticles] = useState<Article[]>(cachedData || []);
   const [loading, setLoading] = useState(!cachedData);
 
@@ -59,15 +66,17 @@ export default function CategoryPage({ category, description }: CategoryPageProp
     async function fetchArticles() {
       const { data, error } = await supabase
         .from('articles')
-        .select('*')
+        .select('id, title, slug, category, author, image_url, published_at')
         .eq('category', category)
-        .order('published_at', { ascending: false });
+        .order('published_at', { ascending: false })
+        .limit(28);
 
       if (error) {
         console.error('Error fetching articles:', error);
       } else {
-        setArticles(data || []);
-        setCachedArticles(category, data || []);
+        const formatted = (data || []).map(normalizeArticle);
+        setArticles(formatted);
+        setCachedArticles(category, formatted);
       }
       setLoading(false);
     }
@@ -126,6 +135,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                   src={article.image_url}
                   alt={article.title}
                   size="small"
+                  placeholderDataUrl={article.placeholderDataUrl}
                   hoverScale
                   className="w-full aspect-[4/5] md:aspect-[3/4] mb-4"
                 />
@@ -153,6 +163,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                 src={heroArticle.image_url}
                 alt={heroArticle.title}
                 size="large"
+                placeholderDataUrl={heroArticle.placeholderDataUrl}
                 priority
                 hoverScale
                 hoverDuration={700}
@@ -183,6 +194,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                   src={article.image_url}
                   alt={article.title}
                   size="small"
+                  placeholderDataUrl={article.placeholderDataUrl}
                   hoverScale
                   className="w-full aspect-[4/5] md:aspect-[3/4] mb-4"
                 />
@@ -225,6 +237,7 @@ export default function CategoryPage({ category, description }: CategoryPageProp
                     src={article.image_url}
                     alt={article.title}
                     size="medium"
+                    placeholderDataUrl={article.placeholderDataUrl}
                     hoverScale
                     className="w-full aspect-[4/5] mb-4"
                   />

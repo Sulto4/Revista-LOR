@@ -1,1 +1,0 @@
-import{j as e}from"./index-OmT0UIS-.js";import{C as r}from"./CategoryPage-Cpa38ILF.js";function o(){return e.jsx(r,{category:"Sport",description:"Ultimele știri sportive, competiții importante și performanțe remarcabile. Acoperire completă a evenimentelor sportive din România și străinătate."})}export{o as default};

@@ -1,0 +1,1 @@
+import{j as r}from"./index-NTK5VHrB.js";import{C as e}from"./CategoryPage-BKDBsukO.js";function a(){return r.jsx(e,{category:"Cultură",description:"Explorează lumea artei contemporane, cinematografiei, muzicii și literaturii. Analize profunde și perspective fresh asupra culturii moderne."})}export{a as default};

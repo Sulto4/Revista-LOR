@@ -25,6 +25,8 @@ const SIZE_CONFIG: Record<ImageSize, { width: number; quality: number }> = {
 
 const SRCSET_WIDTHS = [360, 480, 640, 768, 1024, 1200];
 
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+
 function getBaseUrl(url: string): string {
   if (url.includes('?')) {
     return url.split('?')[0];
@@ -32,7 +34,23 @@ function getBaseUrl(url: string): string {
   return url;
 }
 
+function isSupabaseStorageUrl(url: string): boolean {
+  return url.includes('supabase.co/storage/v1/object/public/');
+}
+
+function optimizeSupabaseUrl(url: string, width: number, quality: number): string {
+  const renderUrl = url.replace(
+    '/storage/v1/object/public/',
+    '/storage/v1/render/image/public/'
+  );
+  return `${renderUrl}?width=${width}&quality=${quality}`;
+}
+
 function optimizeImageUrl(url: string, width: number, quality: number): string {
+  if (isSupabaseStorageUrl(url)) {
+    return optimizeSupabaseUrl(url, width, quality);
+  }
+
   if (url.includes('pexels.com')) {
     const baseUrl = getBaseUrl(url);
     return `${baseUrl}?auto=compress&cs=tinysrgb&w=${width}&q=${quality}&fm=webp`;
@@ -47,7 +65,11 @@ function optimizeImageUrl(url: string, width: number, quality: number): string {
 }
 
 function generateSrcSet(url: string, quality: number): string {
-  if (!url.includes('pexels.com') && !url.includes('unsplash.com')) {
+  const isOptimizable = url.includes('pexels.com') ||
+                        url.includes('unsplash.com') ||
+                        isSupabaseStorageUrl(url);
+
+  if (!isOptimizable) {
     return '';
   }
 
